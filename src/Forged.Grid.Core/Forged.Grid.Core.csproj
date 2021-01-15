@@ -13,15 +13,47 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType Condition="'$(Configuration)'=='Release'">none</DebugType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/SDOSPY/Forged.Grid</RepositoryUrl>
-    <PackageLicenseFile>gpl-3.0.txt</PackageLicenseFile>
     <RepositoryType>GitHub</RepositoryType>
+    <PackageLicenseFile>gpl-3.0.txt</PackageLicenseFile>
+    <PackageTags>Forged</PackageTags>
+    <PackageReleaseNotes>Permite la creación de una Grid para ASP.NET Core de los siguientes tipos:
+
+# Formateado (permite poner un checkbox por registro y en ela Cabecera, cuando se pulsa el de cabecera
+   se seleccionan todos los registros.
+# Codificado (Encoding). Permite generar en una columna por registro un botón funcional.
+# Filtrado; permite filtrar por columna independientemente.
+# Ordenación. Permite ordenar cada columna independientemente.
+# Paginación. Permite mostrar la Grid con paginado cuyo tamaño se puede determinar, e indicar si se
+   muestrao no un desplegable con tamaños de paginación.
+# Pie de página. Permite mostrar un Pié de página programable.
+# Exportable. Permite exportar los datos del Grid. Se puede hacer exportación por paginación o no.
+# Atributos Html. Permite asignar atributos mediante CSS por fila.
+# Vistas Parciales. Permite crear grid's parciales en algunos elementos (filas).
+# Procesado de Filas. Permite procesar las filas de la Grid, para modificar la forma en la que se visualizan los
+   valores de la misma.
+# DataTable. Permite utilizar como fuente de Datos, un DataTable.
+# Registrar Filtro. Permite añadir un filtro para columnas con un tipo concreto de datos [typeof(int)].
+# Desregistrar Filtro. Permite eliminar un tipo de filtro en un determinado tipo concreto de datos.</PackageReleaseNotes>
+    <Description>Permite la creación de una Grid para ASP.NET Core</Description>
+    <PackageIcon>favicon.ico</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="1.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="1.1.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\gpl-3.0.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\Forged.Grid.Web\wwwroot\favicon.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
