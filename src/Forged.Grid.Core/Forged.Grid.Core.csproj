@@ -37,6 +37,7 @@
 # Registrar Filtro. Permite añadir un filtro para columnas con un tipo concreto de datos [typeof(int)].
 # Desregistrar Filtro. Permite eliminar un tipo de filtro en un determinado tipo concreto de datos.</PackageReleaseNotes>
     <Description>Permite la creación de una Grid para ASP.NET Core</Description>
+    <Title>Control Grid para ASP.NET Core MVC</Title>
     <PackageIcon>favicon.png</PackageIcon>
   </PropertyGroup>
 
