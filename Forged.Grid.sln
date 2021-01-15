@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents Solution", "Docum
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		CONTRIBUTING.md = CONTRIBUTING.md
+		docs\gpl-3.0.txt = docs\gpl-3.0.txt
 		LICENSE = LICENSE
 		README.md = README.md
 		tsconfig.json = tsconfig.json

@@ -14,11 +14,4 @@
     <Folder Include="Views\Shared\ForgedGrid\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\..\docs\gpl-3.0.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-
 </Project>
