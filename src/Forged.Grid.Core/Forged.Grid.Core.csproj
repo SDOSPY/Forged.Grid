@@ -24,23 +24,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="1.1.8" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Columns\" />
-    <Folder Include="Config\" />
-    <Folder Include="Filtering\" />
-    <Folder Include="Grids\" />
-    <Folder Include="Html\" />
-    <Folder Include="Sorting\" />
-    <Folder Include="Rows\" />
-    <Folder Include="Processors\" />
-    <Folder Include="Paging\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\docs\gpl-3.0.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-
 </Project>

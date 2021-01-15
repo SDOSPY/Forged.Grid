@@ -10,8 +10,4 @@
     <RepositoryType>GitHub</RepositoryType>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Shared\ForgedGrid\" />
-  </ItemGroup>
-
 </Project>
