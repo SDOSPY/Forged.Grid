@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6BC63277-C8A1-49B5-B6BF-603A62F1B17C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid", "src\Forged.Grid\Forged.Grid.csproj", "{B60DB61E-9F25-4CF7-AA46-9115F42A01A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid.Core", "src\Forged.Grid.Core\Forged.Grid.Core.csproj", "{2B153710-F7BA-4474-BB77-43F5C7F626CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents Solution", "Documents Solution", "{1C5FA67E-DDCC-4805-A875-6895288FEFFC}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE = LICENSE
+		README.md = README.md
+		tsconfig.json = tsconfig.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{83C8879B-9653-4716-B2BB-86CD994728DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid.Test", "tests\Forged.Grid.Test\Forged.Grid.Test.csproj", "{BC61D9D9-B93A-44DA-89E9-F79466885BED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B153710-F7BA-4474-BB77-43F5C7F626CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B153710-F7BA-4474-BB77-43F5C7F626CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B153710-F7BA-4474-BB77-43F5C7F626CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B153710-F7BA-4474-BB77-43F5C7F626CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7} = {6BC63277-C8A1-49B5-B6BF-603A62F1B17C}
+		{2B153710-F7BA-4474-BB77-43F5C7F626CE} = {6BC63277-C8A1-49B5-B6BF-603A62F1B17C}
+		{BC61D9D9-B93A-44DA-89E9-F79466885BED} = {83C8879B-9653-4716-B2BB-86CD994728DD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB4070D4-80A2-49E1-8BB1-DA0C07C338CD}
+	EndGlobalSection
+EndGlobal
