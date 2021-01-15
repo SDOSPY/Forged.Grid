@@ -22,7 +22,7 @@ namespace Forged.Grid.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddMvcGrid(filters =>
+            services.AddForgedGrid(filters =>
             {
                 filters.BooleanTrueOptionText = () => "True";
                 filters.BooleanFalseOptionText = () => "False";
