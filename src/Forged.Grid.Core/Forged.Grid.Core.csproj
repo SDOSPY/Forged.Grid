@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.9.0</Version>
+    <Version>1.0.0</Version>
     <Nullable>enable</Nullable>
     <Company>SDOSPY</Company>
     <LangVersion>8.0</LangVersion>
@@ -12,6 +12,11 @@
     <RootNamespace>Forged.Grid</RootNamespace>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType Condition="'$(Configuration)'=='Release'">none</DebugType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/SDOSPY/Forged.Grid</RepositoryUrl>
+    <PackageLicenseFile>gpl-3.0.txt</PackageLicenseFile>
+    <RepositoryType>GitHub</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,6 +34,13 @@
     <Folder Include="Rows\" />
     <Folder Include="Processors\" />
     <Folder Include="Paging\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\gpl-3.0.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -2,10 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>SDOSPY</Company>
+    <Copyright>Copyright © SDOSPY</Copyright>
+    <PackageLicenseFile>gpl-3.0.txt</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/SDOSPY/Forged.Grid</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Views\Shared\ForgedGrid\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\gpl-3.0.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
