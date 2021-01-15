@@ -1,0 +1,146 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid controls for ASP.NET Core projects";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+            .Using(GridFilterMode.Header)
+            .Empty("No data found")
+            .Pageable(pager =>
+            {
+                pager.RowsPerPage = 4;
+            })
+            .Filterable()
+            .Sortable()
+        )
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>MVC controller</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ViewResult</span> Index()
+{
+    <span class="com">// Result needs to be IQueryable in database scenarios, to make use of database side paging.</span>
+    <span class="kwd">return</span> View(Context.Set&lt;<span class="cls">Person</span>&gt;());
+}
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>MVC view</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Using(<span class="cls">GridFilterMode</span>.Header)
+    .Empty(<span class="str">"No data found"</span>)
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Razor page</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">IndexModel</span> : <span class="cls">PageModel</span>
+{
+    <span class="kwd">public</span> <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt; People { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    <span class="kwd">public void</span> OnGet()
+    {
+        People = repository.GetPeople();
+    }
+}
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Razor page view</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+@@page
+@@model <span class="cls">IndexModel</span>
+
+@@(Html
+    .Grid(Model.People)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Using(<span class="cls">GridFilterMode</span>.Header)
+    .Empty(<span class="str">"No data found"</span>)
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+</div>

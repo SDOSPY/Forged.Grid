@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{83C8879B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid.Test", "tests\Forged.Grid.Test\Forged.Grid.Test.csproj", "{BC61D9D9-B93A-44DA-89E9-F79466885BED}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid.Web", "src\Forged.Grid.Web\Forged.Grid.Web.csproj", "{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7} = {6BC63277-C8A1-49B5-B6BF-603A62F1B17C}
 		{2B153710-F7BA-4474-BB77-43F5C7F626CE} = {6BC63277-C8A1-49B5-B6BF-603A62F1B17C}
 		{BC61D9D9-B93A-44DA-89E9-F79466885BED} = {83C8879B-9653-4716-B2BB-86CD994728DD}
+		{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91} = {6BC63277-C8A1-49B5-B6BF-603A62F1B17C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB4070D4-80A2-49E1-8BB1-DA0C07C338CD}

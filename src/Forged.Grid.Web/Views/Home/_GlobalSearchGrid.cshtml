@@ -1,0 +1,18 @@
+﻿@model IQueryable<Person>
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name);
+        columns.Add(model => model.Surname);
+        columns.Add(model => model.MaritalStatus);
+
+        columns.Add(model => model.Age);
+        columns.Add(model => model.Birthday).Formatted("{0:d}");
+        columns.Add(model => model.IsWorking);
+    })
+    .UsingUrl(Url.Action("GlobalSearch"))
+    .Empty("No data found")
+    .Sortable()
+)

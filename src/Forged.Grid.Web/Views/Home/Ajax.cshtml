@@ -1,0 +1,174 @@
+﻿@{
+    ViewBag.Title = "Grid using ajax";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @Html.AjaxGrid(Url.Action("Ajax"))
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>MVC controller</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ActionResult</span> Index()
+{
+    <span class="kwd">if</span> (HttpContext.Request.Headers[<span class="str">"X-Requested-With"</span>] == <span class="str">"XMLHttpRequest"</span>)
+        <span class="kwd">return</span> PartialView(<span class="str">"_IndexGrid"</span>, repository.GetPeople());
+
+    <span class="kwd">return</span> View();
+}
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>MVC main view</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+@@Html.AjaxGrid(Url.Action(<span class="str">"Index"</span>))
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>_IndexGrid partial view</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+<span class="com">@@* Should only include grid declaration *@@</span>
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Empty(<span class="str">"No data found"</span>)
+    .Pageable(pager =>
+    {
+        pager.PagesToDisplay = 2;
+        pager.RowsPerPage = 2;
+    })
+    .Filterable()
+    .Sortable()
+)
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Razor pages</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">IndexModel</span> : <span class="cls">PageModel</span>
+{
+    <span class="kwd">public void</span> OnGet()
+    {
+    }
+}
+
+<span class="kwd">public class</span> <span class="cls">IndexGridModel</span> : <span class="cls">PageModel</span>
+{
+    <span class="kwd">public</span> <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt; People { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    <span class="kwd">public void</span> OnGet()
+    {
+        People = repository.GetPeople();
+    }
+}
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Index razor page</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+@@page
+@@model IndexModel
+
+@@Html.AjaxGrid(Url.Page(<span class="str">"IndexGrid"</span>))
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>IndexGrid razor page</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+@@page
+@@model <span class="cls">IndexGridModel</span>
+
+@@{ Layout = null; }
+
+<span class="com">@@* Should only include grid declaration *@@</span>
+
+@@(Html
+    .Grid(Model.People)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Empty(<span class="str">"No data found"</span>)
+    .Pageable(pager =>
+    {
+        pager.PagesToDisplay = 2;
+        pager.RowsPerPage = 2;
+    })
+    .Filterable()
+    .Sortable()
+)
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+</div>

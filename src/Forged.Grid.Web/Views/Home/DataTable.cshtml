@@ -1,0 +1,63 @@
+﻿@model DataTable
+
+@{
+    ViewBag.Title = "Grid with Datatable source";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model.Rows.Cast<DataRow>())
+            .Build(columns =>
+            {
+                foreach (DataColumn? column in Model.Columns)
+                {
+                    String name = column!.ColumnName;
+
+                    columns.Add(model => model[name] as String).Filterable(true).Sortable(true).Named(name).Titled(column.Caption);
+                }
+            })
+            .Empty("No data found")
+            .Pageable(pager =>
+            {
+                pager.RowsPerPage = 4;
+            })
+        )
+    </div>
+</div>
+
+<div class="widget code">
+    <div class="widget-header">
+        <div class="fa fa-code"></div>
+        <span>View</span>
+    </div>
+    <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">DataTable</span>
+
+@@(Html
+    .Grid(Model.Rows.Cast<DataRow>())
+    .Build(columns =>
+    {
+        foreach (<span class="cls">DataColumn</span>? column <span class="kwd">in</span> Model.Columns)
+        {
+            <span class="cls">String</span> name = column!.ColumnName;
+
+            columns.Add(model => model[name] as <span class="cls">String</span>).Filterable(<span class="kwd">true</span>).Sortable(<span class="kwd">true</span>).Named(name).Titled(column.Caption);
+        }
+    })
+    .Empty(<span class="str">"No data found"</span>)
+    .Pageable(pager =>
+    {
+        pager.RowsPerPage = 4;
+    })
+)
+</code>
+</pre>
+    </div>
+</div>

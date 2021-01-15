@@ -1,0 +1,57 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid data sorting";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name).Sortable(true);
+                columns.Add(model => model.Surname).Sortable(false);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age).Sortable(GridSortOrder.Desc);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+            .Sortable()
+        )
+    </div>
+</div>
+
+<div class="widget code">
+    <div class="widget-header">
+        <div class="fa fa-code"></div>
+        <span>View</span>
+    </div>
+    <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>).Sortable(<span class="kwd">true</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>).Sortable(<span class="kwd">false</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>); <span class="com">// Enums are sorted by their value and not by their string representation.</span>
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>).Sortable(<span class="cls">GridSortOrder</span>.Desc); <span class="com">// Sets first sort order to desc instead of asc.</span>
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Sortable() <span class="com">// Enables sorting for not explicitly configured property expression columns.</span>
+)
+</code>
+</pre>
+    </div>
+</div>

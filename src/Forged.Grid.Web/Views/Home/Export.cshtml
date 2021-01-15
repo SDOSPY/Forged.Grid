@@ -1,0 +1,115 @@
+﻿@model IGrid<Person>
+
+@{
+    ViewBag.Title = "Grid export";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+        <div class="widget-buttons">
+            <a class="fa fa-file-excel-o" href="@(Url.Action("ExportData") + ViewContext.HttpContext.Request.QueryString)"></a>
+        </div>
+    </div>
+    <div class="widget-content">
+        @(new HtmlGrid<Person>(Html, Model))
+    </div>
+</div>
+
+<div class="row">
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Controller</span>
+        </div>
+        <div class="widget-content">
+<pre>
+    <code>
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ViewResult</span> Index()
+{
+    <span class="kwd">return</span> View(CreateExportableGrid());
+}
+
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ViewResult</span> ExportIndex()
+{
+    <span class="kwd">return</span> Export(CreateExportableGrid(), <span class="str">"People"</span>);
+}
+
+<span class="com">// Using EPPlus from nuget.</span>
+<span class="com">// Export grid method can be reused for all grids.</span>
+<span class="kwd">private</span> <span class="cls">FileContentResult</span> Export(<span class="cls">IGrid</span> grid, <span class="cls">String</span> fileName)
+{
+    <span class="cls">Int32</span> col = 1;
+    <span class="kwd">using</span> <span class="cls">ExcelPackage</span> package = new <span class="cls">ExcelPackage</span>();
+    <span class="cls">ExcelWorksheet</span> sheet = package.Workbook.Worksheets.Add(<span class="str">"Data"</span>);
+
+    <span class="kwd">foreach</span> (<span class="cls">IGridColumn</span> column <span class="kwd">in</span> grid.Columns)
+    {
+        sheet.Cells[1, col].Value = column.Title;
+        sheet.Column(col++).Width = 18;
+
+        column.IsEncoded = <span class="kwd">false</span>;
+    }
+
+    <span class="kwd">foreach</span> (<span class="cls">IGridRow</span>&lt;<span class="cls">Object</span>&gt; row <span class="kwd">in</span> grid.Rows)
+    {
+        col = 1;
+
+        <span class="kwd">foreach</span> (<span class="cls">IGridColumn</span> column <span class="kwd">in</span> grid.Columns)
+            sheet.Cells[row.Index + 2, col++].Value = column.ValueFor(row);
+    }
+
+    <span class="kwd">return</span> File(package.GetAsByteArray(), <span class="str">"application/unknown"</span>, <span class="str">$"</span>{fileName}<span class="str">.xlsx"</span>);
+}
+<span class="kwd">private</span> <span class="cls">IGrid</span>&lt;<span class="cls">Person</span>&gt; CreateExportableGrid()
+{
+    <span class="cls">IGrid</span>&lt;<span class="cls">Person</span>&gt; grid = <span class="kwd">new</span> <span class="cls">Grid</span>&lt;<span class="cls">Person</span>&gt;(repository.GetPeople());
+    grid.ViewContext = new ViewContext { HttpContext = HttpContext };
+    grid.Query = Request.Query;
+
+    grid.Columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+    grid.Columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+
+    grid.Columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+    grid.Columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+    grid.Columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+
+    <span class="com">// Pager should be excluded on export if all data is needed.</span>
+    grid.Pager = <span class="kwd">new</span> <span class="cls">GridPager</span>&lt;<span class="cls">Person</span>&gt;(grid);
+    grid.Processors.Add(grid.Pager);
+    grid.Processors.Add(grid.Sort);
+    grid.Pager.RowsPerPage = 6;
+
+    <span class="kwd">foreach</span> (<span class="cls">IGridColumn</span> column <span class="kwd">in</span> grid.Columns)
+    {
+        column.Filter.IsEnabled = <span class="kwd">true</span>;
+        column.Sort.IsEnabled = <span class="kwd">true</span>;
+    }
+
+    <span class="kwd">return</span> grid;
+}
+</code>
+</pre>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>View</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IGrid</span>&lt;<span class="cls">Person</span>&gt;
+
+&lt;a href="@@(Url.Action(<span class="str">"ExportIndex"</span>) + ViewContext.HttpContext.Request.QueryString)"&gt;Export&lt;/a&gt;
+
+@@(<span class="kwd">new</span> <span class="cls">HtmlGrid</span>&lt;<span class="cls">Person</span>&gt;(Html, Model))
+</code>
+</pre>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@model IQueryable<Person>
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name);
+        columns.Add(model => model.Surname);
+        columns.Add(model => model.MaritalStatus);
+
+        columns.Add(model => model.Age);
+        columns.Add(model => model.Birthday).Formatted("{0:d}");
+        columns.Add(model => model.IsWorking);
+    })
+    .Pageable(pager =>
+    {
+        pager.PagesToDisplay = 2;
+        pager.RowsPerPage = 2;
+    })
+    .Empty("No data found")
+    .Filterable()
+    .Sortable()
+)

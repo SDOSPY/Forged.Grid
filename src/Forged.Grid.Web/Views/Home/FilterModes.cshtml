@@ -1,0 +1,179 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid filter modes";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+            .Using(GridFilterMode.Row)
+            .Empty("No data found")
+            .Filterable()
+            .Sortable()
+        )
+    </div>
+</div>
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+            .Using(GridFilterMode.Excel)
+            .Empty("No data found")
+            .Filterable()
+            .Sortable()
+        )
+    </div>
+</div>
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+            .Using(GridFilterMode.Header)
+            .Empty("No data found")
+            .Filterable()
+            .Sortable()
+        )
+    </div>
+</div>
+
+<div class="row">
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Filter row view</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name);
+        columns.Add(model => model.Surname);
+        columns.Add(model => model.MaritalStatus);
+
+        columns.Add(model => model.Age);
+        columns.Add(model => model.Birthday).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking);
+    })
+    .Using(<span class="cls">GridFilterMode</span>.Row)
+    .Empty(<span class="str">"No data found"</span>)
+    .Filterable()
+    .Sortable()
+)
+</code>
+</pre>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Excel row view</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name);
+        columns.Add(model => model.Surname);
+        columns.Add(model => model.MaritalStatus);
+
+        columns.Add(model => model.Age);
+        columns.Add(model => model.Birthday).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking);
+    })
+    .Using(<span class="cls">GridFilterMode</span>.Excel)
+    .Empty(<span class="str">"No data found"</span>)
+    .Filterable()
+    .Sortable()
+)
+</code>
+</pre>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Header row view</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name);
+        columns.Add(model => model.Surname);
+        columns.Add(model => model.MaritalStatus);
+
+        columns.Add(model => model.Age);
+        columns.Add(model => model.Birthday).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking);
+    })
+    .Using(<span class="cls">GridFilterMode</span>.Header)
+    .Empty(<span class="str">"No data found"</span>)
+    .Filterable()
+    .Sortable()
+)
+</code>
+</pre>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid value formatting";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => Html.CheckBox("Check_" + model.Id)).Titled(Html.CheckBox("CheckAll")).Css("action");
+                columns.Add().RenderedAs((model, row) => row + 1).Titled("#").Css("text-center action");
+
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking).RenderedAs(model => model.IsWorking == true ? "Employed" : "Unemployed");
+            })
+        )
+    </div>
+</div>
+
+<div class="widget code">
+    <div class="widget-header">
+        <div class="fa fa-code"></div>
+        <span>View</span>
+    </div>
+    <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => Html.CheckBox(<span class="str">"Check_"</span> + model.Id)).Titled(Html.CheckBox(<span class="str">"CheckAll"</span>));
+        columns.Add().RenderedAs((model, row) => row + 1).Titled(<span class="str">"#"</span>).Css(<span class="str">"text-center"</span>);
+
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>).RenderedAs(model => model.IsWorking == <span class="kwd">true</span> ? <span class="str">"Employed"</span> : <span class="str">"Unemployed"</span>);
+    })
+)
+</code>
+</pre>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.getElementById("CheckAll").addEventListener("change", function () {
+            document.querySelectorAll("[id^='Check_'").forEach(checkbox => checkbox.checked = this.checked);
+        });
+    </script>
+}

@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Grid global search";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+        <input id="GridSearch" class="grid-search" placeholder="Search..." />
+    </div>
+    <div class="widget-content">
+        @await Html.PartialAsync("_GlobalSearchGrid")
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.getElementById("GridSearch").addEventListener("input", function () {
+            const grid = new MvcGrid(document.querySelector(".forged-grid"));
+
+            grid.url.searchParams.set("search", this.value);
+
+            grid.reload();
+        });
+    </script>
+}

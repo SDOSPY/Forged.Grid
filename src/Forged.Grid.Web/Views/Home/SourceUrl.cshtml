@@ -1,0 +1,94 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid switching to ajax grid";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @await Html.PartialAsync("_SourceUrlGrid")
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Controller</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ActionResult</span> Index()
+{
+    <span class="com">// Initial page load would load grid html and then switch to ajax for consecutive calls.</span>
+
+    <span class="kwd">if</span> (HttpContext.Request.Headers[<span class="str">"X-Requested-With"</span>] == <span class="str">"XMLHttpRequest"</span>)
+        <span class="kwd">return</span> PartialView(<span class="str">"_IndexGrid"</span>, repository.GetPeople());
+
+    <span class="kwd">return</span> View(repository.GetPeople());
+}
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Main view</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html.Partial(<span class="str">"_IndexGrid"</span>))
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>_IndexGrid partial view</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .UsingUrl(Url.Action(<span class="str">"Index"</span>, <span class="str">"Home"</span>))
+    .Empty(<span class="str">"No data found"</span>)
+    .Pageable(pager =>
+    {
+        pager.PagesToDisplay = 3;
+        pager.RowsPerPage = 2;
+    })
+    .Filterable()
+    .Sortable()
+)
+</code>
+</pre>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid value encoding";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => Html.CheckBox("Person_" + model.Id)).Css("action");
+                columns.Add(model => $"<button data-id=\"{model.Id}\">Edit</button>").Encoded(false).Css("action");
+
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age).Titled("Encoded age").RenderedAs(model => "<span>" + model.Age + "</span>");
+                columns.Add(model => model.Age).Titled("Not encoded age").RenderedAs(model => "<span style='color: #CC4444'>" + model.Age + "</span>").Encoded(false);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+        )
+    </div>
+</div>
+
+<div class="widget code">
+    <div class="widget-header">
+        <div class="fa fa-code"></div>
+        <span>View</span>
+    </div>
+    <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => Html.CheckBox(<span class="str">"Person_"</span> + model.Id)); <span class="com">// IHtmlContent has encoding disabled by default.</span>
+        columns.Add(model => <span class="str">$"&lt;button data-id=\"</span>{model.Id}\<span class="str">"&gt;Edit&lt;/button&gt;"</span>).Encoded(<span class="kwd">false</span>);
+
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Encoded age"</span>).RenderedAs(model => <span class="str">"&lt;span&gt;"</span> + model.Age + <span class="str">"&lt;/span&gt;"</span>);
+        columns.Add(model => model.Age).Titled(<span class="str">"Not encoded age"</span>).RenderedAs(model => <span class="str">"&lt;span style='color: #CC4444'&gt;"</span> + model.Age + <span class="str">"&lt;/span&gt;"</span>).Encoded(<span class="kwd">false</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+)
+</code>
+</pre>
+    </div>
+</div>

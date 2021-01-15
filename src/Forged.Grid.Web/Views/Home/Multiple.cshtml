@@ -1,0 +1,119 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid multiple grids on one page";
+}
+
+<div class="row">
+    <div class="widget example col">
+        <div class="widget-header">
+            <div class="fa fa-bars"></div>
+            <span>Preview</span>
+        </div>
+        <div class="widget-content">
+            @(Html
+                .Grid(Model)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.Name);
+                    columns.Add(model => model.Surname);
+
+                    columns.Add(model => model.Age);
+                    columns.Add(model => model.Birthday).Formatted("{0:d}");
+                })
+                .Empty("No data found")
+                .Named("first")
+                .Filterable()
+                .Sortable()
+            )
+        </div>
+    </div>
+    <div class="widget example col">
+        <div class="widget-header">
+            <div class="fa fa-bars"></div>
+            <span>Preview</span>
+        </div>
+        <div class="widget-content">
+            @(Html
+                .Grid(Model)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.Name);
+                    columns.Add(model => model.Surname);
+
+                    columns.Add(model => model.Age);
+                    columns.Add(model => model.Birthday).Formatted("{0:d}");
+                })
+                .Empty("No data found")
+                .Named("second")
+                .Filterable()
+                .Sortable()
+            )
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>View</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Empty(<span class="str">"No data found"</span>)
+    .Named(<span class="str">"first"</span>)
+    .Filterable()
+    .Sortable()
+)
+</code>
+</pre>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>View</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Empty(<span class="str">"No data found"</span>)
+    .Named(<span class="str">"second"</span>)
+    .Filterable()
+    .Sortable()
+)
+</code>
+</pre>
+        </div>
+    </div>
+</div>

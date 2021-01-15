@@ -1,0 +1,79 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid footer";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+            .UsingFooter("_GridFooter")
+        )
+    </div>
+</div>
+
+<div class="row">
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>View</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .UsingFooter(<span class="str">"_GridFooter"</span>)
+)
+</code>
+</pre>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>_GridFooter partial view</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IGrid</span>&lt;<span class="cls">Person</span>&gt;
+
+&lt;tr&gt;
+    &lt;td colspan="3"&gt;&lt;b&gt;Average&lt;/b&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;@@(Model.Rows.Average(row =&gt; row.Model.Age))&lt;/b&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+</code>
+</pre>
+        </div>
+    </div>
+</div>

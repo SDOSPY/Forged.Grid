@@ -1,0 +1,132 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="grid,table,ajax,mvc,core" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Grid controls for ASP.NET MVC projects.">
+    <title>@ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+
+    <environment names="Development">
+        <link href="~/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="~/css/font-awesome/font-awesome.css" rel="stylesheet">
+        <link href="~/css/forged-grid/forged-grid.css" rel="stylesheet">
+        <link href="~/css/shared/base.css" rel="stylesheet">
+    </environment>
+    <environment names="Staging,Production">
+        <link asp-append-version="true" href="~/css/page/bundle.min.css" rel="stylesheet">
+    </environment>
+</head>
+<body class="container-fluid">
+    <div class="row">
+        <div class="sidebar col-lg-2">
+            <div class="logo">
+                <a href="https://github.com/NonFactors/AspNetCore.Grid">
+                    <span class="fa fa-github">
+                        <span class="version">v@(typeof(IGrid).Assembly.GetName().Version)</span>
+                    </span>
+                </a>
+            </div>
+            <input id="SearchInput" class="sidebar-search" placeholder="Search...">
+            <ul>
+                <li>
+                    <a asp-action="Index">Quick start</a>
+                </li>
+                <li>
+                    <a asp-action="Installation">Installation</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a asp-action="Formatting">Formatting</a>
+                </li>
+                <li>
+                    <a asp-action="Encoding">Encoding</a>
+                </li>
+                <li>
+                    <a asp-action="Filtering">Filtering</a>
+                </li>
+                <li>
+                    <a asp-action="Sorting">Sorting</a>
+                </li>
+                <li>
+                    <a asp-action="Paging">Paging</a>
+                </li>
+                <li>
+                    <a asp-action="Footer">Footer</a>
+                </li>
+                <li>
+                    <a asp-action="Export">Export</a>
+                </li>
+                <li>
+                    <a asp-action="Events">Events</a>
+                </li>
+                <li>
+                    <a asp-action="Api">Api</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a asp-action="Ajax">Ajax</a>
+                </li>
+                <li>
+                    <a asp-action="Localization">Localization</a>
+                </li>
+                <li>
+                    <a asp-action="FilterModes">Filter modes</a>
+                </li>
+                <li>
+                    <a asp-action="GlobalSearch">Global search</a>
+                </li>
+                <li>
+                    <a asp-action="Multiple">Multiple grids</a>
+                </li>
+                <li>
+                    <a asp-action="Attributes">Html attributes</a>
+                </li>
+                <li>
+                    <a asp-action="Partials">Custom partials</a>
+                </li>
+                <li>
+                    <a asp-action="RowProcessing">Row processing</a>
+                </li>
+                <li>
+                    <a asp-action="Preferences">User preferences</a>
+                </li>
+                <li>
+                    <a asp-action="DataTable">DataTable source</a>
+                </li>
+                <li>
+                    <a asp-action="ManualProcessing">Manual processing</a>
+                </li>
+                <li>
+                    <a asp-action="SourceUrl">Switching normal grid to ajax grid</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a asp-action="Register">Filter registration</a>
+                </li>
+                <li>
+                    <a asp-action="Unregister">Filter unregistration</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-lg-10">
+            @RenderBody()
+        </div>
+    </div>
+
+    <environment names="Development">
+        <script src="~/js/forged-grid/forged-grid.js"></script>
+        <script src="~/js/shared/site.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script asp-append-version="true" src="~/js/page/bundle.min.js"></script>
+    </environment>
+    @RenderSection("scripts", false)
+</body>
+</html>

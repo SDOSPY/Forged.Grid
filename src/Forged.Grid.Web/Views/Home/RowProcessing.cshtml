@@ -1,0 +1,128 @@
+﻿@using Forged.Grid.Web.Processors;
+
+@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid row processing";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name).Titled("N. Surname");
+                columns.Add(model => model.Surname);
+
+                columns.Add(model => model.Age);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+            .Using(new NotWorkingPersonFilter())
+            .Using(new ShortNameProcessor())
+        )
+    </div>
+</div>
+
+<div class="widget code">
+    <div class="widget-header">
+        <div class="fa fa-code"></div>
+        <span>View</span>
+    </div>
+    <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"N. Surname"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Using(<span class="kwd">new</span> <span class="cls">NotWorkingPersonFilter</span>())
+    .Using(<span class="kwd">new</span> <span class="cls">ShortNameProcessor</span>())
+)
+</code>
+</pre>
+    </div>
+</div>
+
+<div class="row">
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Not working person filter</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">NotWorkingPersonFilter</span> : <span class="cls">IGridProcessor</span>&lt;<span class="cls">Person</span>&gt;
+{
+    <span class="kwd">public</span> <span class="cls">GridProcessorType</span> ProcessorType { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    <span class="kwd">public</span> NotWorkingPersonFilter()
+    {
+        ProcessorType = <span class="cls">GridProcessorType</span>.Pre;
+        <span class="com">// Executed on all the data, mainly for filtering or sorting data.</span>
+    }
+
+    <span class="kwd">public</span> <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt; Process(<span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt; items)
+    {
+        <span class="kwd">return</span> items.Where(item => item.IsWorking == <span class="kwd">false</span>);
+    }
+}
+</code>
+</pre>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Short name processor</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">ShortNameProcessor</span> : <span class="cls">IGridProcessor</span>&lt;<span class="cls">Person</span>&gt;
+{
+    <span class="kwd">public</span> <span class="cls">GridProcessorType</span> ProcessorType { <span class="kwd">get</span>; <span class="kwd">set</span>; }
+
+    <span class="kwd">public</span> ShortNameProcessor()
+    {
+        ProcessorType = <span class="cls">GridProcessorType</span>.Post;
+        <span class="com">// Executed after data is filtered and sorted, mainly for paging or mutating data.</span>
+    }
+
+    <span class="kwd">public</span> <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt; Process(<span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt; items)
+    {
+        <span class="kwd">return</span> items.Select(person => <span class="kwd">new</span> <span class="cls">Person</span>
+        {
+            Id = person.Id,
+            Name = person.Name.Substring(0, 1) + <span class="str">". "</span> + person.Surname,
+            Surname = person.Surname,
+
+            Age = person.Age,
+            Birthday = person.Birthday,
+            IsWorking = person.IsWorking,
+            MaritalStatus = person.MaritalStatus,
+
+            Children = person.Children
+        });
+    }
+}
+</code>
+</pre>
+        </div>
+    </div>
+</div>

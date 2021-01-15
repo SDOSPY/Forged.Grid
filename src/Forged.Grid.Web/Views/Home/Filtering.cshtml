@@ -1,0 +1,69 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid data filtering";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name).UsingDefaultFilterMethod("equals");
+                columns.Add(model => model.Surname).Filterable(GridFilterCase.Lower);
+                columns.Add(model => model.MaritalStatus).Filterable(GridFilterType.Multi);
+
+                columns.Add(model => model.Age).Filterable(false);
+                columns.Add(model => model.Birthday).Filterable(GridFilterType.Double);
+                columns.Add(model => model.IsWorking).UsingFilterOptions(new[]
+                {
+                    new SelectListItem(),
+                    new SelectListItem { Value = "false", Text = "Working" },
+                    new SelectListItem { Value = "true", Text = "Unemployed" }
+                });
+            })
+            .Empty("No data found")
+            .Filterable()
+        )
+    </div>
+</div>
+
+<div class="widget code">
+    <div class="widget-header">
+        <div class="fa fa-code"></div>
+        <span>View</span>
+    </div>
+    <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>).UsingDefaultFilterMethod(<span class="str">"equals"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>).Filterable(<span class="cls">GridFilterCase</span>.Lower);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>).Filterable(<span class="cls">GridFilterType</span>.Multi);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>).Filterable(<span class="kwd">false</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Filterable(<span class="cls">GridFilterType</span>.Double);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>).UsingFilterOptions(<span class="kwd">new</span>[]
+        {
+            <span class="kwd">new</span> <span class="cls">SelectListItem</span>(),
+            <span class="kwd">new</span> <span class="cls">SelectListItem</span> { Value = <span class="str">"false"</span>, Text = <span class="str">"Working"</span> },
+            <span class="kwd">new</span> <span class="cls">SelectListItem</span> { Value = <span class="str">"true"</span>, Text = <span class="str">"Unemployed"</span> }
+        });
+    })
+    .Empty(<span class="str">"No data found"</span>)
+    .Filterable() <span class="com">// Enables single filtering for not explicitly configured property expression columns.</span>
+)
+</code>
+</pre>
+    </div>
+</div>
