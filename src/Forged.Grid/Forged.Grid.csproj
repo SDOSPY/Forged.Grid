@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="css\mvc-grid\fonts\" />
-    <Folder Include="js\mvc-grid\" />
-    <Folder Include="Views\Shared\MvcGrid\" />
+    <Folder Include="Views\Shared\ForgedGrid\" />
   </ItemGroup>
 
 </Project>

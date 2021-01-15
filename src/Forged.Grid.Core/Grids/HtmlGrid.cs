@@ -14,7 +14,7 @@ namespace Forged.Grid
         {
             Html = html;
             Grid = grid;
-            PartialViewName = "MvcGrid/_Grid";
+            PartialViewName = "ForgedGrid/_Grid";
             grid.ViewContext ??= html.ViewContext;
             grid.Query ??= grid.ViewContext.HttpContext.Request.Query;
         }

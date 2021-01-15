@@ -92,7 +92,7 @@ namespace Forged.Grid
             CurrentPage = 1;
             RowsPerPage = 20;
             PagesToDisplay = 5;
-            PartialViewName = "MvcGrid/_Pager";
+            PartialViewName = "ForgedGrid/_Pager";
             ProcessorType = GridProcessorType.Post;
             PageSizes = new Dictionary<int, string> { [10] = "10", [20] = "20", [50] = "50", [100] = "100" };
         }

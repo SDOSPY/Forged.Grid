@@ -507,7 +507,7 @@ namespace Forged.Grid.Tests
             column.Filter.First = Substitute.For<IGridFilter>();
             column.Grid.Query = HttpUtility.ParseQueryString("sort=name asc");
             IDictionary<string, object?> actual = column.AsAttributes();
-            Assert.Equal("test-classes filterable sortable asc mvc-grid-hidden", actual["class"]);
+            Assert.Equal("test-classes filterable sortable asc forged-grid-hidden", actual["class"]);
             Assert.Equal(GridFilterType.Double, actual["data-filter-type"]);
             Assert.Equal("equals", actual["data-filter-default-method"]);
             Assert.Equal(GridSortOrder.Desc, actual["data-sort-first"]);

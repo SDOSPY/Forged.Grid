@@ -128,9 +128,10 @@ namespace Forged.Grid
         public static GridHtmlAttributes AsAttributes(this IGridColumn column)
         {
             string classes = column.CssClasses;
-            GridHtmlAttributes attributes = new GridHtmlAttributes();
-
-            attributes["class"] = classes;
+            GridHtmlAttributes attributes = new GridHtmlAttributes
+            {
+                ["class"] = classes
+            };
             if (!string.IsNullOrEmpty(column.Name))
                 attributes["data-name"] = column.Name;
             if (column.Filter.IsEnabled == true)
@@ -157,7 +158,7 @@ namespace Forged.Grid
                     attributes["data-sort-first"] = column.Sort.FirstOrder;
             }
             if (column.IsHidden)
-                classes += " mvc-grid-hidden";
+                classes += " forged-grid-hidden";
             classes = classes.Trim();
             if (string.IsNullOrEmpty(classes))
                 attributes.Remove("class");

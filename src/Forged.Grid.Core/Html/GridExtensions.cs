@@ -23,11 +23,11 @@ namespace Forged.Grid
             TagBuilder grid = new TagBuilder("div");
             grid.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
             grid.Attributes["data-url"] = url;
-            grid.AddCssClass("mvc-grid");
+            grid.AddCssClass("forged-grid");
             return grid;
         }
 
-        public static IServiceCollection AddMvcGrid(this IServiceCollection services, Action<GridFilters>? configure = null)
+        public static IServiceCollection AddForgedGrid(this IServiceCollection services, Action<GridFilters>? configure = null)
         {
             GridFilters filters = new GridFilters();
             configure?.Invoke(filters);

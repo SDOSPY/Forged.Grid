@@ -6,7 +6,7 @@
     Int32 firstDisplayPage = Model.FirstDisplayPage;
 }
 
-    <div class="@($"mvc-grid-pager {Model.CssClasses}".Trim())" data-show-page-sizes="@Model.ShowPageSizes" data-total-rows="@Model.TotalRows">
+    <div class="@($"forged-grid-pager {Model.CssClasses}".Trim())" data-show-page-sizes="@Model.ShowPageSizes" data-total-rows="@Model.TotalRows">
     @if (totalPages > 0)
     {
         if (currentPage > 1)
@@ -42,10 +42,10 @@
         }
         if (Model.ShowPageSizes)
         {
-        <div class="mvc-grid-page-sizes">
+        <div class="forged-grid-page-sizes">
         @if (Model.PageSizes.Count > 0)
         {
-            <select class="mvc-grid-pager-rows">
+            <select class="forged-grid-pager-rows">
             @foreach (KeyValuePair<Int32, String> size in Model.PageSizes)
             {
                 if (Model.RowsPerPage == size.Key)
@@ -61,17 +61,17 @@
         }
         else
         {
-            <input class="mvc-grid-pager-rows" value="@Model.RowsPerPage" />
+            <input class="forged-grid-pager-rows" value="@Model.RowsPerPage" />
         }
         </div>
         }
         else
         {
-        <input class="mvc-grid-pager-rows" type="hidden" value="@Model.RowsPerPage" />
+        <input class="forged-grid-pager-rows" type="hidden" value="@Model.RowsPerPage" />
         }
     }
     else
     {
-        <input class="mvc-grid-pager-rows" type="hidden" value="@Model.RowsPerPage" />
+        <input class="forged-grid-pager-rows" type="hidden" value="@Model.RowsPerPage" />
     }
     </div>

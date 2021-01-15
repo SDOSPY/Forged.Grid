@@ -1,5 +1,5 @@
 /*!
- * Mvc.Grid 1.0.0
+ * Forged.Grid 1.0.0
  * https://github.com/SDOSPY/Forged.Grid
  *
  * Copyright © SDOSPY
@@ -8,34 +8,34 @@
  * http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-export interface MvcGridOptions {
+export interface ForgedGridOptions {
     url: URL;
     id: string;
     query: string;
     isAjax: boolean;
     loadingDelay: number | null;
     filters: {
-        [type: string]: typeof MvcGridFilter | undefined;
+        [type: string]: typeof ForgedGridFilter | undefined;
     };
 }
-export interface MvcGridLanguage {
+export interface ForgedGridLanguage {
     [type: string]: {
         [method: string]: string;
     } | undefined;
 }
-export interface MvcGridConfiguration {
+export interface ForgedGridConfiguration {
     name: string;
     columns: {
         name: string;
         hidden: boolean;
     }[];
 }
-export declare class MvcGrid {
+export declare class ForgedGrid {
     private static instances;
-    static lang: MvcGridLanguage;
+    static lang: ForgedGridLanguage;
     element: HTMLElement;
-    columns: MvcGridColumn[];
-    pager?: MvcGridPager;
+    columns: ForgedGridColumn[];
+    pager?: ForgedGridPager;
     loader?: HTMLDivElement;
     controller: AbortController;
     url: URL;
@@ -47,39 +47,39 @@ export declare class MvcGrid {
     sort: Map<string, "asc" | "desc">;
     filterMode: "row" | "excel" | "header";
     filters: {
-        [type: string]: typeof MvcGridFilter | undefined;
+        [type: string]: typeof ForgedGridFilter | undefined;
     };
-    constructor(container: HTMLElement, options?: Partial<MvcGridOptions>);
-    set(options: Partial<MvcGridOptions>): this;
+    constructor(container: HTMLElement, options?: Partial<ForgedGridOptions>);
+    set(options: Partial<ForgedGridOptions>): this;
     showConfiguration(anchor?: HTMLElement): void;
-    getConfiguration(): MvcGridConfiguration;
-    configure(configuration: MvcGridConfiguration): void;
+    getConfiguration(): ForgedGridConfiguration;
+    configure(configuration: ForgedGridConfiguration): void;
     reload(): void;
     private buildSort;
     private findGrid;
     private cleanUp;
     private bind;
 }
-export declare class MvcGridColumn {
+export declare class ForgedGridColumn {
     name: string;
-    grid: MvcGrid;
+    grid: ForgedGrid;
     isHidden: boolean;
     header: HTMLElement;
-    sort: MvcGridColumnSort | null;
-    filter: MvcGridColumnFilter | null;
-    constructor(grid: MvcGrid, header: HTMLElement, rowFilter: HTMLElement | null);
+    sort: ForgedGridColumnSort | null;
+    filter: ForgedGridColumnFilter | null;
+    constructor(grid: ForgedGrid, header: HTMLElement, rowFilter: HTMLElement | null);
     private cleanUp;
 }
-export declare class MvcGridColumnSort {
-    column: MvcGridColumn;
+export declare class ForgedGridColumnSort {
+    column: ForgedGridColumn;
     button: HTMLButtonElement;
     first: "asc" | "desc";
     order: "asc" | "desc" | "";
-    constructor(column: MvcGridColumn);
+    constructor(column: ForgedGridColumn);
     toggle(multi: boolean): void;
     private bind;
 }
-export declare class MvcGridColumnFilter {
+export declare class ForgedGridColumnFilter {
     name: string;
     isApplied: boolean;
     defaultMethod: string;
@@ -93,37 +93,37 @@ export declare class MvcGridColumnFilter {
         method: string;
         values: string[];
     };
-    column: MvcGridColumn;
-    instance?: MvcGridFilter;
+    column: ForgedGridColumn;
+    instance?: ForgedGridFilter;
     button: HTMLButtonElement;
     rowFilter: HTMLElement | null;
     options: HTMLSelectElement | null;
     inlineInput: HTMLInputElement | null;
-    constructor(column: MvcGridColumn, rowFilter: HTMLElement | null);
+    constructor(column: ForgedGridColumn, rowFilter: HTMLElement | null);
     apply(): void;
     cancel(): void;
     private bind;
 }
-export declare class MvcGridPager {
-    grid: MvcGrid;
+export declare class ForgedGridPager {
+    grid: ForgedGrid;
     totalRows: number;
     currentPage: number;
     element: HTMLElement;
     showPageSizes: boolean;
     rowsPerPage: HTMLInputElement;
     pages: NodeListOf<HTMLElement>;
-    constructor(grid: MvcGrid, element: HTMLElement);
+    constructor(grid: ForgedGrid, element: HTMLElement);
     apply(page: string): void;
     private cleanUp;
     private bind;
 }
-export declare class MvcGridPopup {
+export declare class ForgedGridPopup {
     static draggedElement: HTMLElement | null;
-    static draggedColumn: MvcGridColumn | null;
+    static draggedColumn: ForgedGridColumn | null;
     static lastActiveElement: HTMLElement | null;
     static element: HTMLDivElement;
-    static showConfiguration(grid: MvcGrid, anchor?: HTMLElement): void;
-    static show(filter: MvcGridColumnFilter): void;
+    static showConfiguration(grid: ForgedGrid, anchor?: HTMLElement): void;
+    static show(filter: ForgedGridColumnFilter): void;
     static hide(e?: UIEvent): void;
     private static setValues;
     private static setValue;
@@ -132,13 +132,13 @@ export declare class MvcGridPopup {
     private static reposition;
     private static bind;
 }
-export declare class MvcGridFilter {
+export declare class ForgedGridFilter {
     methods: string[];
     cssClasses: string;
-    column: MvcGridColumn;
+    column: ForgedGridColumn;
     mode: "row" | "excel" | "header";
     type: "single" | "double" | "multi";
-    constructor(column: MvcGridColumn);
+    constructor(column: ForgedGridColumn);
     init(): void;
     isValid(value: string): boolean;
     validate(input: HTMLInputElement): void;
@@ -151,17 +151,17 @@ export declare class MvcGridFilter {
     bindValues(): void;
     bindActions(): void;
 }
-export declare class MvcGridTextFilter extends MvcGridFilter {
-    constructor(column: MvcGridColumn);
+export declare class ForgedGridTextFilter extends ForgedGridFilter {
+    constructor(column: ForgedGridColumn);
 }
-export declare class MvcGridNumberFilter extends MvcGridFilter {
-    constructor(column: MvcGridColumn);
+export declare class ForgedGridNumberFilter extends ForgedGridFilter {
+    constructor(column: ForgedGridColumn);
     isValid(value: string): boolean;
 }
-export declare class MvcGridDateFilter extends MvcGridFilter {
-    constructor(column: MvcGridColumn);
+export declare class ForgedGridDateFilter extends ForgedGridFilter {
+    constructor(column: ForgedGridColumn);
 }
-export declare class MvcGridGuidFilter extends MvcGridFilter {
-    constructor(column: MvcGridColumn);
+export declare class ForgedGridGuidFilter extends ForgedGridFilter {
+    constructor(column: ForgedGridColumn);
     isValid(value: string): boolean;
 }

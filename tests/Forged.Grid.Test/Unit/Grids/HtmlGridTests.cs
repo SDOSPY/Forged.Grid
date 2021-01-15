@@ -79,7 +79,7 @@ namespace Forged.Grid.Tests
         public void HtmlGrid_SetsPartialViewName()
         {
             string actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).PartialViewName;
-            string expected = "MvcGrid/_Grid";
+            string expected = "ForgedGrid/_Grid";
             Assert.Equal(expected, actual);
         }
 

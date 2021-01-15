@@ -11,11 +11,11 @@ using Xunit;
 
 namespace Forged.Grid.Tests
 {
-    public class MvcGridExtensionsTests
+    public class ForgedGridExtensionsTests
     {
         private readonly static IHtmlHelper html;
 
-        static MvcGridExtensionsTests()
+        static ForgedGridExtensionsTests()
         {
             html = Substitute.For<IHtmlHelper>();
             html.ViewContext.Returns(new ViewContext { HttpContext = new DefaultHttpContext() });
@@ -66,7 +66,7 @@ namespace Forged.Grid.Tests
         {
             StringWriter writer = new StringWriter();
             html.AjaxGrid("DataSource").WriteTo(writer, HtmlEncoder.Default);
-            string expected = "<div class=\"mvc-grid\" data-url=\"DataSource\"></div>";
+            string expected = "<div class=\"forged-grid\" data-url=\"DataSource\"></div>";
             string actual = writer.GetStringBuilder().ToString();
             Assert.Equal(expected, actual);
         }
@@ -76,27 +76,27 @@ namespace Forged.Grid.Tests
         {
             StringWriter writer = new StringWriter();
             html.AjaxGrid("DataSource", new { @class = "classy", data_url = "Test", data_id = 1 }).WriteTo(writer, HtmlEncoder.Default);
-            string expected = "<div class=\"mvc-grid classy\" data-id=\"1\" data-url=\"DataSource\"></div>";
+            string expected = "<div class=\"forged-grid classy\" data-id=\"1\" data-url=\"DataSource\"></div>";
             string actual = writer.GetStringBuilder().ToString();
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void AddMvcGrid_FiltersInstance()
+        public void AddForgedGrid_FiltersInstance()
         {
             IServiceCollection services = new ServiceCollection();
-            services.AddMvcGrid();
+            services.AddForgedGrid();
             ServiceDescriptor actual = services.Single();
             Assert.Equal(typeof(IGridFilters), actual.ServiceType);
             Assert.IsType<GridFilters>(actual.ImplementationInstance);
         }
 
         [Fact]
-        public void AddMvcGrid_ConfiguresFiltersInstance()
+        public void AddForgedGrid_ConfiguresFiltersInstance()
         {
             Action<GridFilters> configure = Substitute.For<Action<GridFilters>>();
             IServiceCollection services = new ServiceCollection();
-            services.AddMvcGrid(configure);
+            services.AddForgedGrid(configure);
             ServiceDescriptor actual = services.Single();
             configure.Received()((GridFilters)actual.ImplementationInstance);
         }

@@ -306,7 +306,7 @@ namespace Forged.Grid.Tests
         public void GridPager_SetsDefaultPartialViewName()
         {
             string actual = new GridPager<GridModel>(pager.Grid).PartialViewName;
-            string expected = "MvcGrid/_Pager";
+            string expected = "ForgedGrid/_Pager";
             Assert.Equal(expected, actual);
         }
 
