@@ -17,7 +17,7 @@
     <RepositoryUrl>https://github.com/SDOSPY/Forged.Grid</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageLicenseFile>gpl-3.0.txt</PackageLicenseFile>
-    <PackageTags>Forged</PackageTags>
+    <PackageTags>Forged, Grid, Control</PackageTags>
     <PackageReleaseNotes>Permite la creación de una Grid para ASP.NET Core de los siguientes tipos:
 
 # Formateado (permite poner un checkbox por registro y en ela Cabecera, cuando se pulsa el de cabecera
