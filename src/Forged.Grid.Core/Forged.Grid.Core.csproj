@@ -37,7 +37,7 @@
 # Registrar Filtro. Permite añadir un filtro para columnas con un tipo concreto de datos [typeof(int)].
 # Desregistrar Filtro. Permite eliminar un tipo de filtro en un determinado tipo concreto de datos.</PackageReleaseNotes>
     <Description>Permite la creación de una Grid para ASP.NET Core</Description>
-    <PackageIcon>favicon.ico</PackageIcon>
+    <PackageIcon>favicon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -50,7 +50,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\Forged.Grid.Web\wwwroot\favicon.ico">
+    <None Include="..\Forged.Grid.Web\wwwroot\favicon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
