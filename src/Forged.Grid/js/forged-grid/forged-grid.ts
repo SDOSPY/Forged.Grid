@@ -1,5 +1,5 @@
 /*!
- * Forged.Grid 1.0.0
+ * Forged.Grid 1.0.1
  * https://github.com/SDOSPY/Forged.Grid
  *
  * Copyright © SDOSPY
