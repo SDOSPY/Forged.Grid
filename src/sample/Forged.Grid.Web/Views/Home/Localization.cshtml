@@ -1,0 +1,146 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid localization";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name).Titled("Nom");
+                columns.Add(model => model.Surname).Titled("Nom de famille");
+                columns.Add(model => model.MaritalStatus).Titled("État matrimonial");
+
+                columns.Add(model => model.Age).Titled("Âge");
+                columns.Add(model => model.Birthday).Titled("Date de naissance");
+                columns.Add(model => model.IsWorking).Titled("Employé");
+            })
+            .Empty("Aucune donnée disponible")
+            .Filterable(GridFilterType.Double)
+            .Sortable()
+        )
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Startup</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public void</span> ConfigureServices(<span class="cls">IServiceCollection</span> services)
+{
+    services.AddMvcGrid(filters =>
+    {
+        filters.BooleanFalseOptionText = () => <span class="str">"faux"</span>;
+        filters.BooleanTrueOptionText = () => <span class="str">"vrai"</span>;
+        filters.BooleanEmptyOptionText = () => <span class="str">""</span>;
+    });
+}
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>View</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Nom"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Nom de famille"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"État matrimonial"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Âge"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Date de naissance"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employé"</span>);
+    })
+    .Empty(<span class="str">"Aucune donnée disponible"</span>)
+    .Filterable(<span class="cls">GridFilterType</span>.Double)
+    .Sortable()
+)
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Javascript</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+&lt;script&gt;
+    MvcGrid.lang = {
+        default: {
+            <span class="str">"equals"</span>: <span class="str">"Egale"</span>,
+            <span class="str">"not-equals"</span>: <span class="str">"Pas égal"</span>
+        },
+        text: {
+            <span class="str">"contains"</span>: <span class="str">"Contient"</span>,
+            <span class="str">"equals"</span>: <span class="str">"Egale"</span>,
+            <span class="str">"not-equals"</span>: <span class="str">"Pas égal"</span>,
+            <span class="str">"starts-with"</span>: <span class="str">"Commence par"</span>,
+            <span class="str">"ends-with"</span>: <span class="str">"Fini par"</span>
+        },
+        number: {
+            <span class="str">"equals"</span>: <span class="str">"Egale"</span>,
+            <span class="str">"not-equals"</span>: <span class="str">"Pas égal"</span>,
+            <span class="str">"less-than"</span>: <span class="str">"Inférieur à"</span>,
+            <span class="str">"greater-than"</span>: <span class="str">"Supérieur à"</span>,
+            <span class="str">"less-than-or-equal"</span>: <span class="str">"Inférieur ou égale à"</span>,
+            <span class="str">"greater-than-o-requal"</span>: <span class="str">"Supérieur ou égale à"</span>
+        },
+        date: {
+            <span class="str">"equals"</span>: <span class="str">"Egale"</span>,
+            <span class="str">"not-equals"</span>: <span class="str">"Pas égal"</span>,
+            <span class="str">"earlier-than"</span>: <span class="str">"Inférieur à"</span>,
+            <span class="str">"later-than"</span>: <span class="str">"Supérieur à"</span>,
+            <span class="str">"earlier-than-or-equal"</span>: <span class="str">"Inférieur ou égale à"</span>,
+            <span class="str">"later-than-or-equal"</span>: <span class="str">"Supérieur ou égale à"</span>
+        },
+        guid: {
+            <span class="str">"equals"</span>: <span class="str">"Egale"</span>,
+            <span class="str">"not-equals"</span>: <span class="str">"Pas égal"</span>,
+        },
+        filter: {
+            <span class="str">"apply"</span>: <span class="str">"<b>&#10003;</b>"</span>,
+            <span class="str">"remove"</span>: <span class="str">"&#10008;"</span>
+        },
+        operator: {
+            <span class="str">"select"</span>: <span class="str">""</span>,
+            <span class="str">"and"</span>: <span class="str">"et"</span>,
+            <span class="str">"or"</span>: <span class="str">"ou"</span>
+        }
+    };
+&lt;/script&gt;
+</code>
+</pre>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/mvc-grid/cultures/mvc-grid.culture.fr.js"></script>
+}

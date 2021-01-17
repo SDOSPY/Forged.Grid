@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,6 @@ namespace Forged.Grid
             {
                 if (IsEnabled == true && !OptionsIsSet)
                     Options = GetFilters().OptionsFor(Column);
-
                 return OptionsValue;
             }
             set
@@ -141,7 +141,7 @@ namespace Forged.Grid
             string value = Column.Grid.Query![keys[1]][0];
             return CreateFilter(method, value);
         }
-        private IGridFilter? CreateFilter(string method, StringValues values)
+        private IGridFilter? CreateFilter(String method, StringValues values)
         {
             if (GetFilters().Create(typeof(TValue), method, values) is IGridFilter filter)
             {
@@ -155,10 +155,8 @@ namespace Forged.Grid
         {
             Type type = GetFilterable(typeof(TValue));
             type = Nullable.GetUnderlyingType(type) ?? type;
-
             if (type.IsEnum)
                 return "default";
-
             switch (System.Type.GetTypeCode(type))
             {
                 case TypeCode.SByte:

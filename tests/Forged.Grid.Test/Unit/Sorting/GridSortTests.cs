@@ -6,10 +6,10 @@ namespace Forged.Grid.Tests
 {
     public class GridSortTests
     {
-        private readonly GridSort<GridModel> sort;
-        private readonly IGridColumn<GridModel, int> sumColumn;
-        private readonly IGridColumn<GridModel, string?> nameColumn;
-        private readonly IGridColumn<GridModel, string?> textColumn;
+        private GridSort<GridModel> sort;
+        private IGridColumn<GridModel, int> sumColumn;
+        private IGridColumn<GridModel, string?> nameColumn;
+        private IGridColumn<GridModel, string?> textColumn;
 
         public GridSortTests()
         {
@@ -25,6 +25,7 @@ namespace Forged.Grid.Tests
         {
             object expected = sort.Grid;
             object actual = new GridSort<GridModel>(sort.Grid).Grid;
+
             Assert.Same(expected, actual);
         }
 
@@ -33,6 +34,7 @@ namespace Forged.Grid.Tests
         {
             GridProcessorType expected = new GridSort<GridModel>(sort.Grid).ProcessorType;
             GridProcessorType actual = GridProcessorType.Pre;
+
             Assert.Equal(expected, actual);
         }
 
@@ -42,6 +44,7 @@ namespace Forged.Grid.Tests
             sumColumn.Name = "sum";
             sumColumn.Sort.IsEnabled = false;
             sumColumn.Grid.Query = HttpUtility.ParseQueryString("sort=sum asc");
+
             Assert.Null(sort[sumColumn]);
         }
 
@@ -76,6 +79,7 @@ namespace Forged.Grid.Tests
             sumColumn.Grid.Name = gridName;
             sumColumn.Sort.IsEnabled = true;
             sumColumn.Grid.Query = HttpUtility.ParseQueryString(query);
+
             Assert.Null(sort[sumColumn]);
         }
 
@@ -107,8 +111,10 @@ namespace Forged.Grid.Tests
             sumColumn.Grid.Name = gridName;
             sumColumn.Sort.IsEnabled = true;
             sumColumn.Grid.Query = HttpUtility.ParseQueryString(query);
+
             int? expected = index;
             int? actual = sort[sumColumn]?.Index;
+
             Assert.Equal(expected, actual);
         }
 
@@ -134,8 +140,10 @@ namespace Forged.Grid.Tests
             sumColumn.Grid.Name = gridName;
             sumColumn.Sort.IsEnabled = true;
             sumColumn.Grid.Query = HttpUtility.ParseQueryString(query);
+
             GridSortOrder? actual = sort[sumColumn]?.Order;
             GridSortOrder? expected = order;
+
             Assert.Equal(expected, actual);
         }
 
@@ -145,10 +153,14 @@ namespace Forged.Grid.Tests
             sumColumn.Name = "sum";
             sumColumn.Grid.Query = null;
             sumColumn.Sort.IsEnabled = true;
+
             Assert.Null(sort[sumColumn]);
+
             sumColumn.Grid.Query = HttpUtility.ParseQueryString("sort=sum asc");
+
             GridSortOrder? expected = GridSortOrder.Asc;
             GridSortOrder? actual = sort[sumColumn]?.Order;
+
             Assert.Equal(expected, actual);
         }
 
@@ -161,12 +173,15 @@ namespace Forged.Grid.Tests
                 new GridModel { Name = "b", Text = "b", Sum = 10 },
                 new GridModel { Name = "a", Text = "c", Sum = 10 }
             }.AsQueryable();
+
             sumColumn.Sort.IsEnabled = true;
             nameColumn.Sort.IsEnabled = true;
             textColumn.Sort.IsEnabled = false;
             sort.Grid.Query = HttpUtility.ParseQueryString("sort=text asc,name asc,sum asc");
+
             IQueryable<GridModel> expected = items.OrderBy(item => item.Name).ThenBy(item => item.Sum);
             IQueryable<GridModel> actual = sort.Process(items);
+
             Assert.Equal(expected, actual);
         }
     }

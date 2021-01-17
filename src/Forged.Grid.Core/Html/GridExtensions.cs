@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection;
+
 using System;
 using System.Collections.Generic;
 
@@ -23,11 +24,11 @@ namespace Forged.Grid
             TagBuilder grid = new TagBuilder("div");
             grid.MergeAttributes(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
             grid.Attributes["data-url"] = url;
-            grid.AddCssClass("forged-grid");
+            grid.AddCssClass("mvc-grid");
             return grid;
         }
 
-        public static IServiceCollection AddForgedGrid(this IServiceCollection services, Action<GridFilters>? configure = null)
+        public static IServiceCollection AddMvcGrid(this IServiceCollection services, Action<GridFilters>? configure = null)
         {
             GridFilters filters = new GridFilters();
             configure?.Invoke(filters);

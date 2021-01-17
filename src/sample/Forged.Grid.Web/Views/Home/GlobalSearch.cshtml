@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Grid global search";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+        <input id="GridSearch" class="grid-search" placeholder="Search..." />
+    </div>
+    <div class="widget-content">
+        @await Html.PartialAsync("_GlobalSearchGrid")
+    </div>
+</div>
+
+<div class="row">
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Controller</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public</span> <span class="cls">ActionResult</span> Index(<span class="cls">String</span> search)
+{
+    <span class="kwd">if</span> (HttpContext.Request.Headers[<span class="str">"X-Requested-With"</span>] == <span class="str">"XMLHttpRequest"</span>)
+        <span class="kwd">return</span> PartialView(<span class="str">"_IndexGrid"</span>, repository.GetPeople(search));
+
+    <span class="kwd">return</span> View();
+}
+</code>
+</pre>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Main view</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+&lt;input id="GridSearch" /&gt;
+
+@@Html.AjaxGrid(Url.Action(<span class="str">"Index"</span>))
+
+&lt;script&gt;
+    document.getElementById(<span class="str">"GridSearch"</span>).addEventListener(<span class="str">"input"</span>, <span class="kwd">function</span>() {
+        <span class="kwd">const</span> grid = <span class="kwd">new</span> <span class="cls">MvcGrid</span>(document.querySelector(<span class="str">".mvc-grid"</span>));
+
+        grid.url.searchParams.set(<span class="str">"search"</span>, <span class="kwd">this</span>.value);
+
+        grid.reload();
+    });
+&lt;/script&gt;
+</code>
+</pre>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>_IndexGrid partial view</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+<span class="com">@@* Should only include grid declaration *@@</span>
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Empty(<span class="str">"No data found"</span>)
+    .Sortable()
+)
+</code>
+</pre>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.getElementById("GridSearch").addEventListener("input", function () {
+            const grid = new MvcGrid(document.querySelector(".mvc-grid"));
+
+            grid.url.searchParams.set("search", this.value);
+
+            grid.reload();
+        });
+    </script>
+}

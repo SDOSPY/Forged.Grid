@@ -13,48 +13,48 @@
     font-family: GridGlyphs;
 }
 
-.forged-grid {
+.mvc-grid {
     line-height: 1.25em;
     position: relative;
     overflow-x: auto;
     font-size: 1rem;
 }
 
-.forged-grid > table {
+.mvc-grid > table {
     border-collapse: collapse;
     max-width: 100%;
     width: 100%;
 }
 
-.forged-grid > table > thead > tr > th {
+.mvc-grid > table > thead > tr > th {
     background-clip: padding-box;
     background-color: #f7f7f7;
     position: relative;
 }
 
-.forged-grid > table > thead > tr > th,
-.forged-grid > table > tbody > tr > td,
-.forged-grid > table > tfoot > tr > td {
+.mvc-grid > table > thead > tr > th,
+.mvc-grid > table > tbody > tr > td,
+.mvc-grid > table > tfoot > tr > td {
     border: 1px solid #dee2e6;
     padding: 0.75em;
 }
 
-.forged-grid .sortable {
+.mvc-grid .sortable {
     padding-right: 2.75em;
     cursor: pointer;
 }
 
-.forged-grid-hidden,
-.forged-grid-options {
+.mvc-grid-hidden,
+.mvc-grid-options {
     display: none;
 }
 
-.forged-grid-title {
+.mvc-grid-title {
     display: inline-block;
 }
 
-.forged-grid-sort,
-.forged-grid-filter {
+.mvc-grid-sort,
+.mvc-grid-filter {
     background-color: rgba(0, 0, 0, 0.03);
     transition: background-color 0.5s;
     font-family: GridGlyphs;
@@ -69,40 +69,40 @@
     top: 0;
 }
 
-.forged-grid-filter:focus,
-.forged-grid-filter:hover {
+.mvc-grid-filter:focus,
+.mvc-grid-filter:hover {
     background-color: rgba(0, 0, 0, 0.06);
     color: inherit;
 }
 
-.forged-grid-filter::before {
+.mvc-grid-filter::before {
     content: "\0041";
 }
 
-.forged-grid-filter.applied::before {
+.mvc-grid-filter.applied::before {
     content: "\0042";
 }
 
-.forged-grid-sort {
+.mvc-grid-sort {
     background: transparent;
     font-weight: normal;
     transition: none;
 }
 
-.forged-grid-sort::after {
+.mvc-grid-sort::after {
     font-size: 0.9em;
     content: "\0044";
     opacity: 0.15;
 }
 
-.forged-grid-sort::before {
+.mvc-grid-sort::before {
     margin-right: -0.5em;
     font-size: 0.9em;
     content: "\0043";
     opacity: 0.15;
 }
 
-.forged-grid-sort span {
+.mvc-grid-sort span {
     position: absolute;
     font-weight: bold;
     text-align: left;
@@ -113,20 +113,20 @@
     top: 40%;
 }
 
-.forged-grid .desc .forged-grid-sort::after,
-.forged-grid .asc .forged-grid-sort::before {
+.mvc-grid .desc .mvc-grid-sort::after,
+.mvc-grid .asc .mvc-grid-sort::before {
     opacity: 0.5;
 }
 
-.forged-grid-row-filters .filterable {
+.mvc-grid-row-filters .filterable {
     padding: 0.25em;
 }
 
-.forged-grid-row-filters th div {
+.mvc-grid-row-filters th div {
     display: flex;
 }
 
-.forged-grid-row-filters .forged-grid-value {
+.mvc-grid-row-filters .mvc-grid-value {
     background-color: #ffffff;
     border: 1px solid #cccccc;
     text-overflow: ellipsis;
@@ -137,47 +137,47 @@
     flex: 1;
 }
 
-.forged-grid-row-filters select.forged-grid-value {
+.mvc-grid-row-filters select.mvc-grid-value {
     padding: 0 0.2em;
 }
 
-.forged-grid-row-filters .forged-grid-value.invalid {
+.mvc-grid-row-filters .mvc-grid-value.invalid {
     outline-color: #dc3545;
 }
 
-.forged-grid-row-filters .forged-grid-value::placeholder {
+.mvc-grid-row-filters .mvc-grid-value::placeholder {
     color: #bbbbbb;
 }
 
-.forged-grid-row-filters .forged-grid-value::-ms-input-placeholder {
+.mvc-grid-row-filters .mvc-grid-value::-ms-input-placeholder {
     color: #bbbbbb;
 }
 
-.forged-grid-row-filters .forged-grid-filter {
+.mvc-grid-row-filters .mvc-grid-filter {
     border: 1px solid #cccccc;
     position: static;
     height: 2.25em;
     width: 2.25em;
 }
 
-.forged-grid-excel-mode .filterable {
+.mvc-grid-excel-mode .filterable {
     padding-right: 3.5em;
 }
 
-.forged-grid-excel-mode .sortable.filterable {
+.mvc-grid-excel-mode .sortable.filterable {
     padding-right: 5.5em;
 }
 
-.forged-grid-excel-mode .filterable .forged-grid-sort,
-.forged-grid-header-mode .filterable .forged-grid-sort {
+.mvc-grid-excel-mode .filterable .mvc-grid-sort,
+.mvc-grid-header-mode .filterable .mvc-grid-sort {
     right: 2.75em;
 }
 
-.forged-grid-header-mode .filterable {
+.mvc-grid-header-mode .filterable {
     padding: 0 2.75em 0 0;
 }
 
-.forged-grid-header-mode .forged-grid-value {
+.mvc-grid-header-mode .mvc-grid-value {
     background-color: #f7f7f7;
     padding: 0.75em;
     font: inherit;
@@ -185,18 +185,18 @@
     margin: 0;
 }
 
-.forged-grid-header-mode .forged-grid-filter {
+.mvc-grid-header-mode .mvc-grid-filter {
     position: absolute;
     width: 2.75em;
     border: none;
     height: 100%;
 }
 
-.forged-grid-header-mode .sortable .forged-grid-value {
+.mvc-grid-header-mode .sortable .mvc-grid-value {
     padding-right: 2.5em;
 }
 
-.forged-grid-popup {
+.mvc-grid-popup {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
     background-clip: padding-box;
     max-width: calc(100% - 2em);
@@ -210,11 +210,11 @@
     margin: 1em;
 }
 
-.forged-grid-popup.forged-grid-guid-filter {
+.mvc-grid-popup.mvc-grid-guid-filter {
     min-width: 20em;
 }
 
-.forged-grid-popup .popup-arrow {
+.mvc-grid-popup .popup-arrow {
     border-right: 7px solid transparent;
     border-left: 7px solid transparent;
     border-bottom: 8px solid #ffffff;
@@ -224,7 +224,7 @@
     top: -8px;
 }
 
-.forged-grid-popup .popup-arrow::after {
+.mvc-grid-popup .popup-arrow::after {
     border-right: 8px solid transparent;
     border-left: 8px solid transparent;
     border-bottom: 9px solid #cccccc;
@@ -235,26 +235,26 @@
     top: -1px;
 }
 
-.forged-grid-popup .popup-content {
+.mvc-grid-popup .popup-content {
     padding: 0.5em;
 }
 
-.forged-grid-popup .popup-group {
+.mvc-grid-popup .popup-group {
     padding: 0.2em;
 }
 
-.forged-grid-popup .popup-operator {
+.mvc-grid-popup .popup-operator {
     text-align: center;
 }
 
-.forged-grid-popup .popup-actions {
+.mvc-grid-popup .popup-actions {
     padding: 0.4em 0 0.2em;
     text-align: center;
 }
 
-.forged-grid-popup .forged-grid-value,
-.forged-grid-popup .forged-grid-method,
-.forged-grid-popup .forged-grid-operator {
+.mvc-grid-popup .mvc-grid-value,
+.mvc-grid-popup .mvc-grid-method,
+.mvc-grid-popup .mvc-grid-operator {
     border: 1px solid #cccccc;
     background-color: #ffffff;
     box-sizing: border-box;
@@ -264,26 +264,26 @@
     width: 100%;
 }
 
-.forged-grid-popup .forged-grid-value[multiple] {
+.mvc-grid-popup .mvc-grid-value[multiple] {
     overflow-y: auto;
     height: 8em;
 }
 
-.forged-grid-popup .forged-grid-operator {
+.mvc-grid-popup .mvc-grid-operator {
     width: auto;
 }
 
-.forged-grid-popup input.forged-grid-value {
+.mvc-grid-popup input.mvc-grid-value {
     text-overflow: ellipsis;
     padding: 0 0.5em;
 }
 
-.forged-grid-popup .forged-grid-value.invalid {
+.mvc-grid-popup .mvc-grid-value.invalid {
     outline-color: #dc3545;
 }
 
-.forged-grid-popup .forged-grid-apply,
-.forged-grid-popup .forged-grid-cancel {
+.mvc-grid-popup .mvc-grid-apply,
+.mvc-grid-popup .mvc-grid-cancel {
     border: 1px solid #ffffff;
     padding: 0.25em;
     cursor: pointer;
@@ -292,28 +292,28 @@
     outline: 0;
 }
 
-.forged-grid-popup .forged-grid-apply {
+.mvc-grid-popup .mvc-grid-apply {
     background-color: #28a745;
     border-color: #28a745;
     margin-right: 0.3em;
     font-weight: bold;
 }
 
-.forged-grid-popup .forged-grid-apply:focus {
+.mvc-grid-popup .mvc-grid-apply:focus {
     box-shadow: 0 0 0 0.2em rgba(40, 167, 69, 0.5);
 }
 
-.forged-grid-popup .forged-grid-cancel {
+.mvc-grid-popup .mvc-grid-cancel {
     background-color: #dc3545;
     border-color: #dc3545;
     margin-left: 0.3em;
 }
 
-.forged-grid-popup .forged-grid-cancel:focus {
+.mvc-grid-popup .mvc-grid-cancel:focus {
     box-shadow: 0 0 0 0.2em rgba(220, 53, 69, 0.5);
 }
 
-.forged-grid-popup .forged-grid-column {
+.mvc-grid-popup .mvc-grid-column {
     box-sizing: border-box;
     align-items: center;
     cursor: pointer;
@@ -323,38 +323,38 @@
     margin: 0;
 }
 
-.forged-grid-popup .forged-grid-column span {
+.mvc-grid-popup .mvc-grid-column span {
     padding: 0 0.5em;
 }
 
-.forged-grid-popup .forged-grid-dropzone:first-child {
+.mvc-grid-popup .mvc-grid-dropzone:first-child {
     padding-top: 0.5em;
 }
 
-.forged-grid-popup .forged-grid-dropzone:last-child {
+.mvc-grid-popup .mvc-grid-dropzone:last-child {
     padding-bottom: 0.5em;
 }
 
-.forged-grid-popup .forged-grid-dragging .forged-grid-column {
+.mvc-grid-popup .mvc-grid-dragging .mvc-grid-column {
     padding: 0 0.5em;
 }
 
-.forged-grid-popup .forged-grid-dragging .forged-grid-dropzone {
+.mvc-grid-popup .mvc-grid-dragging .mvc-grid-dropzone {
     background-color: #c4daff;
     padding: 0.5em;
     opacity: 0.4;
 }
 
-.forged-grid-popup .forged-grid-dragging .forged-grid-dropzone.hover {
+.mvc-grid-popup .mvc-grid-dragging .mvc-grid-dropzone.hover {
     background-color: #5a90ea;
 }
 
-.forged-grid-pager,
-.forged-grid-empty-row {
+.mvc-grid-pager,
+.mvc-grid-empty-row {
     text-align: center;
 }
 
-.forged-grid-pager button {
+.mvc-grid-pager button {
     background-color: #ffffff;
     border: 1px solid #dddddd;
     box-sizing: content-box;
@@ -366,40 +366,40 @@
     color: #337ab7;
 }
 
-.forged-grid-pager button:focus,
-.forged-grid-pager button:hover {
+.mvc-grid-pager button:focus,
+.mvc-grid-pager button:hover {
     background-color: #f7f7f7;
     color: #014c8c;
 }
 
-.forged-grid-pager .active,
-.forged-grid-pager .active:focus,
-.forged-grid-pager .active:hover {
+.mvc-grid-pager .active,
+.mvc-grid-pager .active:focus,
+.mvc-grid-pager .active:hover {
     background-color: #0275d8;
     border-color: #0275d8;
     color: #ffffff;
 }
 
-.forged-grid-pager [disabled],
-.forged-grid-pager [disabled]:hover {
+.mvc-grid-pager [disabled],
+.mvc-grid-pager [disabled]:hover {
     background-color: #efefef;
     cursor: not-allowed;
     color: #777777;
     outline: 0;
 }
 
-.forged-grid-page-sizes {
+.mvc-grid-page-sizes {
     display: inline-block;
     margin-left: 0.5em;
 }
 
-.forged-grid-page-sizes select {
+.mvc-grid-page-sizes select {
     border: 1px solid #dddddd;
     padding: 0.5em;
     font: inherit;
 }
 
-.forged-grid-page-sizes input {
+.mvc-grid-page-sizes input {
     border: 1px solid #dddddd;
     box-sizing: content-box;
     text-align: center;
@@ -408,7 +408,7 @@
     width: 2.5em;
 }
 
-.forged-grid-loader {
+.mvc-grid-loader {
     background-color: rgba(0, 0, 0, 0.3);
     justify-content: center;
     transition: opacity 1s;
@@ -424,11 +424,11 @@
     top: 0;
 }
 
-.forged-grid-loading {
+.mvc-grid-loading {
     opacity: 1;
 }
 
-.forged-grid-loading > div > div {
+.mvc-grid-loading > div > div {
     animation: loader-points 1.4s infinite ease-in-out both;
     background-color: #f5f5f5;
     display: inline-block;
@@ -438,11 +438,11 @@
     width: 1.5em;
 }
 
-.forged-grid-loading > div > div:nth-child(1) {
+.mvc-grid-loading > div > div:nth-child(1) {
     animation-delay: -0.32s;
 }
 
-.forged-grid-loading > div > div:nth-child(2) {
+.mvc-grid-loading > div > div:nth-child(2) {
     animation-delay: -0.16s;
 }
 

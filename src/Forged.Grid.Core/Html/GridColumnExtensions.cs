@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -127,7 +128,7 @@ namespace Forged.Grid
         }
         public static GridHtmlAttributes AsAttributes(this IGridColumn column)
         {
-            string classes = column.CssClasses;
+            String classes = column.CssClasses;
             GridHtmlAttributes attributes = new GridHtmlAttributes
             {
                 ["class"] = classes
@@ -158,7 +159,7 @@ namespace Forged.Grid
                     attributes["data-sort-first"] = column.Sort.FirstOrder;
             }
             if (column.IsHidden)
-                classes += " forged-grid-hidden";
+                classes += " mvc-grid-hidden";
             classes = classes.Trim();
             if (string.IsNullOrEmpty(classes))
                 attributes.Remove("class");

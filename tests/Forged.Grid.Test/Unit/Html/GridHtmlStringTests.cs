@@ -7,7 +7,7 @@ namespace Forged.Grid.Tests
 {
     public class GridHtmlStringTests
     {
-        private readonly TextWriter writer;
+        private TextWriter writer;
 
         public GridHtmlStringTests()
         {
@@ -18,8 +18,10 @@ namespace Forged.Grid.Tests
         public void WriteTo_RawString()
         {
             new GridHtmlString("<test>").WriteTo(writer, null);
+
             string? actual = writer.ToString();
             string? expected = "<test>";
+
             Assert.Equal(expected, actual);
         }
 
@@ -27,8 +29,10 @@ namespace Forged.Grid.Tests
         public void WriteTo_EncodedString()
         {
             new GridHtmlString("<test>").WriteTo(writer, HtmlEncoder.Default);
+
             string? expected = HtmlEncoder.Default.Encode("<test>");
             string? actual = writer.ToString();
+
             Assert.Equal(expected, actual);
         }
 
@@ -41,6 +45,7 @@ namespace Forged.Grid.Tests
         {
             string actual = new GridHtmlString(value).ToString();
             string expected = representation;
+
             Assert.Equal(expected, actual);
         }
     }

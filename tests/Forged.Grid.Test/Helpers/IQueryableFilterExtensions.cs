@@ -10,6 +10,7 @@ namespace Forged.Grid.Tests
         {
             if (filter.Apply(expression.Body) is Expression filterExpression)
                 return items.Where(Expression.Lambda<Func<T, bool>>(filterExpression, expression.Parameters[0]));
+
             return items;
         }
     }

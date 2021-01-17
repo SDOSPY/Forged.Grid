@@ -11,14 +11,16 @@ namespace Forged.Grid.Tests
 {
     public class GridColumnFilterTests
     {
-        private readonly GridColumnFilter<GridModel, string?> filter;
-        private readonly IQueryable<GridModel> items;
+        private GridColumnFilter<GridModel, string?> filter;
+        private IQueryable<GridModel> items;
 
         public GridColumnFilterTests()
         {
             Grid<GridModel> grid = new Grid<GridModel>(Array.Empty<GridModel>());
             GridColumn<GridModel, string?> column = new GridColumn<GridModel, string?>(grid, model => model.Name);
+
             filter = new GridColumnFilter<GridModel, string?>(column) { IsEnabled = true };
+
             items = new[]
             {
                 new GridModel { Name = "aa", NSum = 10, Sum = 40 },
@@ -37,6 +39,7 @@ namespace Forged.Grid.Tests
         {
             object expected = filter.Options = new List<SelectListItem>();
             object actual = filter.Options;
+
             Assert.Same(expected, actual);
         }
 
@@ -44,6 +47,7 @@ namespace Forged.Grid.Tests
         public void Options_Get_Disabled()
         {
             filter.IsEnabled = false;
+
             Assert.Empty(filter.Options);
         }
 
@@ -55,8 +59,10 @@ namespace Forged.Grid.Tests
             filters.OptionsFor(filter.Column).Returns(Array.Empty<SelectListItem>());
             filter.Column.Grid.ViewContext.HttpContext = Substitute.For<HttpContext>();
             filter.Column.Grid.ViewContext.HttpContext.RequestServices.GetService(typeof(IGridFilters)).Returns(filters);
+
             object expected = filters.OptionsFor(filter.Column);
             object actual = filter.Options;
+
             Assert.Same(expected, actual);
         }
 
@@ -68,10 +74,14 @@ namespace Forged.Grid.Tests
             filters.OptionsFor(filter.Column).Returns(Array.Empty<SelectListItem>());
             filter.Column.Grid.ViewContext.HttpContext = Substitute.For<HttpContext>();
             filter.Column.Grid.ViewContext.HttpContext.RequestServices.GetService(typeof(IGridFilters)).Returns(filters);
+
             object options = filter.Options;
+
             filters.OptionsFor(filter.Column).Returns(Array.Empty<SelectListItem>());
+
             object actual = filter.Options;
             object expected = options;
+
             Assert.Same(expected, actual);
         }
 
@@ -79,7 +89,9 @@ namespace Forged.Grid.Tests
         public void Operator_Set_Caches()
         {
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-op=and");
+
             filter.Operator = "or";
+
             Assert.Equal("or", filter.Operator);
         }
 
@@ -93,6 +105,7 @@ namespace Forged.Grid.Tests
             filter.Type = type;
             filter.IsEnabled = isEnabled;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-op=and");
+
             Assert.Null(filter.Operator);
         }
 
@@ -129,8 +142,10 @@ namespace Forged.Grid.Tests
             filter.Column.Grid.Name = name;
             filter.Type = GridFilterType.Double;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString(query);
+
             string? actual = filter.Operator;
             string? expected = op;
+
             Assert.Equal(expected, actual);
         }
 
@@ -139,10 +154,14 @@ namespace Forged.Grid.Tests
         {
             filter.Type = GridFilterType.Double;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-op=or");
+
             string? op = filter.Operator;
+
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-op=and");
+
             string? actual = filter.Operator;
             string? expected = op;
+
             Assert.Equal(expected, actual);
         }
 
@@ -150,7 +169,9 @@ namespace Forged.Grid.Tests
         public void First_Set_Caches()
         {
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-contains=a");
+
             filter.First = null;
+
             Assert.Null(filter.First);
         }
 
@@ -159,6 +180,7 @@ namespace Forged.Grid.Tests
         {
             filter.IsEnabled = false;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-equals=a");
+
             Assert.Null(filter.First);
         }
 
@@ -180,6 +202,7 @@ namespace Forged.Grid.Tests
         {
             filter.Column.Grid.Name = name;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString(query);
+
             Assert.Null(filter.First);
         }
 
@@ -191,6 +214,7 @@ namespace Forged.Grid.Tests
         {
             filter.Type = type;
             filter.Column.Grid.Query = null;
+
             Assert.Null(filter.First);
         }
 
@@ -220,7 +244,9 @@ namespace Forged.Grid.Tests
         {
             filter.Column.Grid.Name = name;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString(query);
+
             IGridFilter actual = filter.First!;
+
             Assert.Equal("equals", actual.Method);
             Assert.IsType<StringFilter>(actual);
             Assert.Equal(value, actual.Values);
@@ -235,7 +261,9 @@ namespace Forged.Grid.Tests
             filter.Column.Grid.Name = name;
             filter.Type = GridFilterType.Multi;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString(query);
+
             IGridFilter actual = filter.First!;
+
             Assert.Equal("equals", actual.Method);
             Assert.IsType<StringFilter>(actual);
             Assert.Equal(value, actual.Values);
@@ -245,9 +273,13 @@ namespace Forged.Grid.Tests
         public void First_Get_Caches()
         {
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-contains=a");
+
             IGridFilter? expected = filter.First;
+
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-equals=b");
+
             IGridFilter actual = filter.First!;
+
             Assert.Equal("contains", actual.Method);
             Assert.IsType<StringFilter>(actual);
             Assert.Equal("a", actual.Values);
@@ -259,7 +291,9 @@ namespace Forged.Grid.Tests
         {
             filter.Type = GridFilterType.Double;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-contains=a&name-equals=b");
+
             filter.Second = null;
+
             Assert.Null(filter.Second);
         }
 
@@ -273,6 +307,7 @@ namespace Forged.Grid.Tests
             filter.Type = type;
             filter.IsEnabled = isEnabled;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-equals=a&name-equals=b");
+
             Assert.Null(filter.Second);
         }
 
@@ -310,6 +345,7 @@ namespace Forged.Grid.Tests
             filter.Column.Grid.Name = name;
             filter.Type = GridFilterType.Double;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString(query);
+
             Assert.Null(filter.Second);
         }
 
@@ -340,7 +376,9 @@ namespace Forged.Grid.Tests
             filter.Column.Grid.Name = name;
             filter.Type = GridFilterType.Double;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString(query);
+
             IGridFilter actual = filter.Second!;
+
             Assert.Equal("equals", actual.Method);
             Assert.IsType<StringFilter>(actual);
             Assert.Equal(value, actual.Values);
@@ -351,9 +389,13 @@ namespace Forged.Grid.Tests
         {
             filter.Type = GridFilterType.Double;
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-contains=a&name-equals=b");
+
             IGridFilter? expected = filter.Second;
+
             filter.Column.Grid.Query = HttpUtility.ParseQueryString("name-starts-with=d&name-ends-with=e");
+
             IGridFilter actual = filter.Second!;
+
             Assert.Equal("equals", actual.Method);
             Assert.IsType<StringFilter>(actual);
             Assert.Equal("b", actual.Values);
@@ -365,6 +407,7 @@ namespace Forged.Grid.Tests
         {
             object actual = new GridColumnFilter<GridModel, string?>(filter.Column).Column;
             object expected = filter.Column;
+
             Assert.Same(expected, actual);
         }
 
@@ -588,6 +631,7 @@ namespace Forged.Grid.Tests
         public void GridColumnFilter_NotMemberExpression_IsNotEnabled()
         {
             IGridColumn<GridModel, string?> column = new GridColumn<GridModel, string?>(filter.Column.Grid, model => model.ToString());
+
             Assert.False(new GridColumnFilter<GridModel, string?>(column).IsEnabled);
         }
 
@@ -595,6 +639,7 @@ namespace Forged.Grid.Tests
         public void GridColumnFilter_MemberExpression_IsEnabledNull()
         {
             IGridColumn<GridModel, string?> column = new GridColumn<GridModel, string?>(filter.Column.Grid, model => model.Name);
+
             Assert.Null(new GridColumnFilter<GridModel, string?>(column).IsEnabled);
         }
 
@@ -606,8 +651,10 @@ namespace Forged.Grid.Tests
             filter.IsEnabled = isEnabled;
             filter.Type = GridFilterType.Double;
             filter.First = new StringFilter { Values = "A" };
+
             object actual = filter.Apply(items);
             object expected = items;
+
             Assert.Same(expected, actual);
         }
 
@@ -618,8 +665,10 @@ namespace Forged.Grid.Tests
             filter.Second = null;
             filter.IsEnabled = true;
             filter.Type = GridFilterType.Double;
+
             object expected = items;
             object actual = filter.Apply(items);
+
             Assert.Same(expected, actual);
         }
 
@@ -630,8 +679,10 @@ namespace Forged.Grid.Tests
             filter.Type = GridFilterType.Double;
             filter.First = Substitute.For<IGridFilter>();
             filter.Second = Substitute.For<IGridFilter>();
+
             object expected = items;
             object actual = filter.Apply(items);
+
             Assert.Same(expected, actual);
         }
 
@@ -644,8 +695,10 @@ namespace Forged.Grid.Tests
             filter.Type = GridFilterType.Double;
             filter.First = new StringFilter { Method = "contains", Values = "a" };
             filter.Second = new StringFilter { Method = "contains", Values = "A" };
+
             IQueryable expected = items.Where(item => item.Name != null && item.Name.Contains("a") && item.Name.Contains("A"));
             IQueryable actual = filter.Apply(items);
+
             Assert.Equal(expected, actual);
         }
 
@@ -658,8 +711,10 @@ namespace Forged.Grid.Tests
             filter.Type = GridFilterType.Double;
             filter.First = new StringFilter { Method = "contains", Values = "a" };
             filter.Second = new StringFilter { Method = "contains", Values = "bB" };
+
             IQueryable expected = items.Where(item => item.Name != null && (item.Name.Contains("a") || item.Name.Contains("bB")));
             IQueryable actual = filter.Apply(items);
+
             Assert.Equal(expected, actual);
         }
 
@@ -673,8 +728,10 @@ namespace Forged.Grid.Tests
             filter.Type = GridFilterType.Double;
             filter.First = new StringFilter { Method = "contains", Values = "a" };
             filter.Second = new StringFilter { Method = "contains", Values = "BB" };
+
             IQueryable expected = items.Where(item => item.Name != null && item.Name.Contains("a"));
             IQueryable actual = filter.Apply(items);
+
             Assert.Equal(expected, actual);
         }
 
@@ -685,8 +742,10 @@ namespace Forged.Grid.Tests
             filter.Type = GridFilterType.Single;
             filter.First = new StringFilter { Method = "contains", Values = "a" };
             filter.Second = new StringFilter { Method = "contains", Values = "bb" };
+
             IQueryable expected = items.Where(item => item.Name != null && item.Name.Contains("a"));
             IQueryable actual = filter.Apply(items);
+
             Assert.Equal(expected, actual);
         }
 
@@ -702,16 +761,20 @@ namespace Forged.Grid.Tests
                 IsEnabled = true,
                 Operator = "or"
             };
+
             IQueryable expected = items.Where(item => item.NSum == 10 || item.NSum > 25);
             IQueryable actual = testFilter.Apply(items);
+
             Assert.Equal(expected, actual);
         }
 
         private void AssertFilterNameFor<TValue>(Expression<Func<GridModel, TValue>> property, string name)
         {
             Grid<GridModel> grid = new Grid<GridModel>(Array.Empty<GridModel>());
+
             string actual = new GridColumnFilter<GridModel, TValue>(new GridColumn<GridModel, TValue>(grid, property)).Name;
             string expected = name;
+
             Assert.Equal(expected, actual);
         }
     }

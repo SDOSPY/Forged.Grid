@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Grid installation";
+}
+
+<div class="widget docs">
+    <div class="widget-header">
+        <div class="fa fa-info"></div>
+        <span>Installation steps</span>
+    </div>
+    <div class="widget-content">
+        <p>
+            Install grid package from nuget.
+        </p>
+        <pre>> Install-Package NonFactors.Grid.Mvc6</pre>
+        <p>
+            Include grid partial views to your shared views folder, they can be found at:
+        </p>
+        <div class="row">
+            <div class="col">
+                <pre><b>Windows:</b> %UserProfile%\.nuget\packages\NonFactors.Grid.Mvc6\{version}\content\Views\</pre>
+            </div>
+            <div class="col">
+                <pre><b>Linux/Mac:</b> ~/.nuget/packages/NonFactors.Grid.Mvc6/{version}/content/Views/</pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>MVC views application</p>
+                <pre>
+&lt;Project name&gt;
+    Views
+        Shared
+<b class="install-note"><span class="diff-add">+</span>           MvcGrid
+<span class="diff-add">+</span>               _Grid.cshtml
+<span class="diff-add">+</span>               _Pager.cshtml</b></pre>
+            </div>
+            <div class="col">
+                <p>Razor pages application</p>
+                <pre>
+&lt;Project name&gt;
+    Pages
+<b class="install-note"><span class="diff-add">+</span>       MvcGrid
+<span class="diff-add">+</span>           _Grid.cshtml
+<span class="diff-add">+</span>           _Pager.cshtml</b>
+                </pre>
+            </div>
+        </div>
+
+            <p>
+                Add grid extensions to known namespaces in _ViewImports.cshtml
+            </p>
+            <pre><b class="install-note"><span class="diff-add">+</span>@@using NonFactors.Mvc.Grid;</b>
+@@using System;</pre>
+            <p>
+                Include grid styling sheet to your project and your page, it can be found at:
+            </p>
+            <div class="row">
+                <div class="col">
+                    <pre><b>Windows:</b> %UserProfile%\.nuget\packages\NonFactors.Grid.Mvc6\{version}\content\css\mvc-grid\</pre>
+                </div>
+                <div class="col">
+                    <pre><b>Linux/Mac:</b> ~/.nuget/packages/NonFactors.Grid.Mvc6/{version}/content/css/mvc-grid/</pre>
+                </div>
+            </div>
+            <pre>
+&lt;html&gt;
+    &lt;head&gt;
+<b class="install-note"><span class="diff-add">+</span>       &lt;link href="~/css/mvc-grid/mvc-grid.css" rel="stylesheet"&gt;</b>
+    &lt;/head&gt;
+    &lt;body&gt;
+        @@RenderBody()
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+            <p>
+                Include grid scripts to your project and your page, it can be found at.
+            </p>
+            <div class="row">
+                <div class="col">
+                    <pre><b>Windows:</b> %UserProfile%\.nuget\packages\NonFactors.Grid.Mvc6\{version}\content\js\mvc-grid\</pre>
+                </div>
+                <div class="col">
+                    <pre><b>Linux/Mac:</b> ~/.nuget/packages/NonFactors.Grid.Mvc6/{version}/content/js/mvc-grid/</pre>
+                </div>
+            </div>
+            <pre>
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;link href="~/css/mvc-grid/mvc-grid.css" rel="stylesheet"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        @@RenderBody()
+
+<b class="install-note"><span class="diff-add">+</span>       &lt;script src="~/js/mvc-grid/mvc-grid.js"&gt;&lt;/script&gt;</b>
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+            <p>
+                Initialize grid instances after rendering grid html
+            </p>
+            <pre>
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;link href="~/css/mvc-grid/mvc-grid.css" rel="stylesheet"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        @@RenderBody()
+
+        &lt;script src="~/js/mvc-grid/mvc-grid.js"&gt;&lt;/script&gt;
+        &lt;script&gt;
+<b class="install-note"><span class="diff-add">+</span>           document.querySelectorAll(".mvc-grid").forEach(element => new MvcGrid(element));</b>
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+    </div>
+</div>

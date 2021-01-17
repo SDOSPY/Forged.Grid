@@ -9,10 +9,10 @@ namespace Forged.Grid.Tests
 {
     public class EnumFilterTests
     {
-        private readonly Expression<Func<GridModel, TestEnum?>> nEnumExpression;
-        private readonly Expression<Func<GridModel, TestEnum>> enumExpression;
-        private readonly IQueryable<GridModel> items;
-        private readonly EnumFilter filter;
+        private Expression<Func<GridModel, TestEnum?>> nEnumExpression;
+        private Expression<Func<GridModel, TestEnum>> enumExpression;
+        private IQueryable<GridModel> items;
+        private EnumFilter filter;
 
         public EnumFilterTests()
         {
@@ -24,6 +24,7 @@ namespace Forged.Grid.Tests
                 new GridModel { Enum = TestEnum.First, NEnum = TestEnum.Second },
                 new GridModel { Enum = TestEnum.Second, NEnum = TestEnum.First }
             }.AsQueryable();
+
             nEnumExpression = (model) => model.NEnum;
             enumExpression = (model) => model.Enum;
             filter = new EnumFilter();
@@ -34,6 +35,7 @@ namespace Forged.Grid.Tests
         {
             filter.Values = "test";
             filter.Method = "equals";
+
             Assert.Null(filter.Apply(enumExpression.Body));
         }
 
@@ -44,8 +46,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "equals";
+
             IEnumerable actual = items.Where(nEnumExpression, filter);
             IEnumerable expected = items.Where(model => model.NEnum == test);
+
             Assert.Equal(expected, actual);
         }
 
@@ -56,8 +60,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "equals";
+
             IEnumerable actual = items.Where(enumExpression, filter);
             IEnumerable expected = items.Where(model => model.Enum == test);
+
             Assert.Equal(expected, actual);
         }
 
@@ -68,8 +74,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "not-equals";
+
             IEnumerable actual = items.Where(nEnumExpression, filter);
             IEnumerable expected = items.Where(model => model.NEnum != test);
+
             Assert.Equal(expected, actual);
         }
 
@@ -80,8 +88,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "not-equals";
+
             IEnumerable actual = items.Where(enumExpression, filter);
             IEnumerable expected = items.Where(model => model.Enum != test);
+
             Assert.Equal(expected, actual);
         }
 
@@ -90,6 +100,7 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "equals";
             filter.Values = StringValues.Empty;
+
             Assert.Null(filter.Apply(enumExpression.Body));
         }
 
@@ -98,6 +109,7 @@ namespace Forged.Grid.Tests
         {
             filter.Values = "0";
             filter.Method = "test";
+
             Assert.Null(filter.Apply(enumExpression.Body));
         }
     }

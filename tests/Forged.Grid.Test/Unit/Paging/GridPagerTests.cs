@@ -9,7 +9,7 @@ namespace Forged.Grid.Tests
 {
     public class GridPagerTests
     {
-        private readonly GridPager<GridModel> pager;
+        private GridPager<GridModel> pager;
 
         public GridPagerTests()
         {
@@ -31,8 +31,10 @@ namespace Forged.Grid.Tests
         {
             pager.RowsPerPage = rows;
             pager.TotalRows = total;
+
             int actual = pager.TotalPages;
             int expected = pages;
+
             Assert.Equal(expected, actual);
         }
 
@@ -52,8 +54,10 @@ namespace Forged.Grid.Tests
             pager.Grid.Name = name;
             pager.CurrentPage = 3;
             pager.TotalRows = 100;
+
             int actual = pager.CurrentPage;
             int expected = 3;
+
             Assert.Equal(expected, actual);
         }
 
@@ -67,8 +71,10 @@ namespace Forged.Grid.Tests
             pager.RowsPerPage = 25;
             pager.Grid.Name = name;
             pager.TotalRows = 100;
+
             int actual = pager.CurrentPage;
             int expected = 4;
+
             Assert.Equal(expected, actual);
         }
 
@@ -84,8 +90,10 @@ namespace Forged.Grid.Tests
             pager.Grid.Query = HttpUtility.ParseQueryString(query);
             pager.Grid.Name = name;
             pager.CurrentPage = 5;
+
             int actual = pager.CurrentPage;
             int expected = 1;
+
             Assert.Equal(expected, actual);
         }
 
@@ -95,8 +103,10 @@ namespace Forged.Grid.Tests
         public void CurrentPage_OnLessOrEqualToZeroCurrentPageReturnsOne(int page)
         {
             pager.CurrentPage = page;
+
             int actual = pager.CurrentPage;
             int expected = 1;
+
             Assert.Equal(expected, actual);
         }
 
@@ -111,9 +121,12 @@ namespace Forged.Grid.Tests
         {
             pager.Grid.Name = name;
             pager.Grid.Query = HttpUtility.ParseQueryString(query);
+
             pager.TotalRows = 4 * pager.RowsPerPage;
+
             int actual = pager.CurrentPage;
             int expected = 2;
+
             Assert.Equal(expected, actual);
         }
 
@@ -135,8 +148,10 @@ namespace Forged.Grid.Tests
             pager.Grid.Name = name;
             pager.RowsPerPage = 33;
             pager.TotalRows = 500;
+
             int actual = pager.RowsPerPage;
             int expected = 33;
+
             Assert.Equal(expected, actual);
         }
 
@@ -154,8 +169,10 @@ namespace Forged.Grid.Tests
             pager.PageSizes.Clear();
             pager.Grid.Name = name;
             pager.RowsPerPage = 5;
+
             int actual = pager.RowsPerPage;
             int expected = 0;
+
             Assert.Equal(expected, actual);
         }
 
@@ -167,8 +184,10 @@ namespace Forged.Grid.Tests
             pager.ShowPageSizes = true;
             pager.RowsPerPage = rows;
             pager.PageSizes.Clear();
+
             int actual = pager.RowsPerPage;
             int expected = 0;
+
             Assert.Equal(expected, actual);
         }
 
@@ -188,8 +207,10 @@ namespace Forged.Grid.Tests
             pager.Grid.Query = HttpUtility.ParseQueryString(query);
             pager.ShowPageSizes = true;
             pager.Grid.Name = name;
+
             int actual = pager.RowsPerPage;
             int expected = rows;
+
             Assert.Equal(expected, actual);
         }
 
@@ -206,8 +227,10 @@ namespace Forged.Grid.Tests
             pager.ShowPageSizes = true;
             pager.PageSizes.Clear();
             pager.Grid.Name = name;
+
             int actual = pager.RowsPerPage;
             int expected = 123;
+
             Assert.Equal(expected, actual);
         }
 
@@ -217,8 +240,10 @@ namespace Forged.Grid.Tests
             pager.Grid.Query = HttpUtility.ParseQueryString("rows=2");
             pager.ShowPageSizes = false;
             pager.RowsPerPage = 1;
+
             int actual = pager.RowsPerPage;
             int expected = 1;
+
             Assert.Equal(expected, actual);
         }
 
@@ -259,8 +284,10 @@ namespace Forged.Grid.Tests
             pager.PagesToDisplay = display;
             pager.RowsPerPage = 1;
             pager.TotalRows = 5;
+
             int actual = pager.FirstDisplayPage;
             int expected = first;
+
             Assert.Equal(expected, actual);
         }
 
@@ -269,6 +296,7 @@ namespace Forged.Grid.Tests
         {
             object actual = new GridPager<GridModel>(pager.Grid).Grid;
             object expected = pager.Grid;
+
             Assert.Same(expected, actual);
         }
 
@@ -283,6 +311,7 @@ namespace Forged.Grid.Tests
         {
             int actual = new GridPager<GridModel>(pager.Grid).CurrentPage;
             int expected = 1;
+
             Assert.Equal(expected, actual);
         }
 
@@ -291,6 +320,7 @@ namespace Forged.Grid.Tests
         {
             int actual = new GridPager<GridModel>(pager.Grid).RowsPerPage;
             int expected = 20;
+
             Assert.Equal(expected, actual);
         }
 
@@ -299,6 +329,7 @@ namespace Forged.Grid.Tests
         {
             int actual = new GridPager<GridModel>(pager.Grid).PagesToDisplay;
             int expected = 5;
+
             Assert.Equal(expected, actual);
         }
 
@@ -307,6 +338,7 @@ namespace Forged.Grid.Tests
         {
             string actual = new GridPager<GridModel>(pager.Grid).PartialViewName;
             string expected = "ForgedGrid/_Pager";
+
             Assert.Equal(expected, actual);
         }
 
@@ -315,6 +347,7 @@ namespace Forged.Grid.Tests
         {
             GridProcessorType actual = new GridPager<GridModel>(pager.Grid).ProcessorType;
             GridProcessorType expected = GridProcessorType.Post;
+
             Assert.Equal(expected, actual);
         }
 
@@ -323,6 +356,7 @@ namespace Forged.Grid.Tests
         {
             Dictionary<int, string> expected = new Dictionary<int, string> { [10] = "10", [20] = "20", [50] = "50", [100] = "100" };
             Dictionary<int, string> actual = new GridPager<GridModel>(pager.Grid).PageSizes;
+
             Assert.Equal(expected, actual);
         }
 
@@ -330,8 +364,10 @@ namespace Forged.Grid.Tests
         public void Process_SetsTotalRows()
         {
             pager.Process(new GridModel[100].AsQueryable());
+
             int actual = pager.TotalRows;
             int expected = 100;
+
             Assert.Equal(expected, actual);
         }
 
@@ -341,8 +377,10 @@ namespace Forged.Grid.Tests
             IQueryable<GridModel> items = new[] { new GridModel(), new GridModel(), new GridModel() }.AsQueryable();
             pager.RowsPerPage = 0;
             pager.CurrentPage = 2;
+
             IEnumerable actual = pager.Process(items);
             IEnumerable expected = items.ToList();
+
             Assert.Equal(expected, actual);
         }
 
@@ -352,8 +390,10 @@ namespace Forged.Grid.Tests
             IQueryable<GridModel> items = new[] { new GridModel(), new GridModel(), new GridModel() }.AsQueryable().OrderBy(_ => 0);
             pager.RowsPerPage = 1;
             pager.CurrentPage = 2;
+
             IEnumerable expected = items.Skip(1).Take(1);
             IEnumerable actual = pager.Process(items);
+
             Assert.Equal(expected, actual);
         }
     }

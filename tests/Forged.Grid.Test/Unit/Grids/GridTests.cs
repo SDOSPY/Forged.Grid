@@ -10,8 +10,10 @@ namespace Forged.Grid.Tests
         public void IGrid_ReturnsColumns()
         {
             Grid<GridModel> grid = new Grid<GridModel>(Array.Empty<GridModel>());
+
             object actual = ((IGrid)grid).Columns;
             object expected = grid.Columns;
+
             Assert.Same(expected, actual);
         }
 
@@ -19,8 +21,10 @@ namespace Forged.Grid.Tests
         public void IGrid_ReturnsRows()
         {
             Grid<GridModel> grid = new Grid<GridModel>(Array.Empty<GridModel>());
+
             object actual = ((IGrid)grid).Rows;
             object expected = grid.Rows;
+
             Assert.Same(expected, actual);
         }
 
@@ -28,8 +32,10 @@ namespace Forged.Grid.Tests
         public void IGrid_ReturnsPager()
         {
             Grid<GridModel> grid = new Grid<GridModel>(Array.Empty<GridModel>());
+
             object? actual = ((IGrid)grid).Pager;
             object? expected = grid.Pager;
+
             Assert.Same(expected, actual);
         }
 
@@ -62,6 +68,7 @@ namespace Forged.Grid.Tests
         {
             IQueryable<GridModel> expected = new GridModel[2].AsQueryable();
             IQueryable<GridModel> actual = new Grid<GridModel>(expected).Source;
+
             Assert.Same(expected, actual);
         }
 
@@ -70,6 +77,7 @@ namespace Forged.Grid.Tests
         {
             GridFilterMode actual = new Grid<GridModel>(Array.Empty<GridModel>()).FilterMode;
             GridFilterMode expected = GridFilterMode.Excel;
+
             Assert.Equal(expected, actual);
         }
 
@@ -83,8 +91,10 @@ namespace Forged.Grid.Tests
         public void Grid_SetsColumns()
         {
             Grid<GridModel> grid = new Grid<GridModel>(Array.Empty<GridModel>());
+
             IGridColumnsOf<GridModel> expected = new GridColumns<GridModel>(grid);
             IGridColumnsOf<GridModel> actual = grid.Columns;
+
             Assert.Same(expected.Grid, actual.Grid);
             Assert.Equal(expected, actual);
         }
@@ -94,6 +104,7 @@ namespace Forged.Grid.Tests
         {
             GridProcessingMode actual = new Grid<GridModel>(Array.Empty<GridModel>()).Mode;
             GridProcessingMode expected = GridProcessingMode.Automatic;
+
             Assert.Equal(expected, actual);
         }
 
@@ -101,8 +112,10 @@ namespace Forged.Grid.Tests
         public void Grid_SetsRows()
         {
             Grid<GridModel> grid = new Grid<GridModel>(Array.Empty<GridModel>());
+
             IGridRowsOf<GridModel> expected = new GridRows<GridModel>(grid);
             IGridRowsOf<GridModel> actual = grid.Rows;
+
             Assert.Same(expected.Grid, actual.Grid);
             Assert.Equal(expected, actual);
         }
@@ -111,8 +124,10 @@ namespace Forged.Grid.Tests
         public void Grid_SetsSort()
         {
             Grid<GridModel> grid = new Grid<GridModel>(Array.Empty<GridModel>());
+
             IGridSort<GridModel> expected = new GridSort<GridModel>(grid);
             IGridSort<GridModel> actual = grid.Sort;
+
             Assert.Same(expected.Grid, actual.Grid);
         }
     }

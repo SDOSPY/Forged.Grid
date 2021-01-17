@@ -10,7 +10,7 @@ namespace Forged.Grid.Tests
 {
     public class GridColumnExtensionsTests
     {
-        private readonly IGridColumn<GridModel, string?> column;
+        private IGridColumn<GridModel, string?> column;
 
         public GridColumnExtensionsTests()
         {
@@ -22,6 +22,7 @@ namespace Forged.Grid.Tests
         {
             Func<GridModel, int, object?>? expected = (model, _) => model.Name;
             Func<GridModel, int, object?>? actual = column.RenderedAs(expected).RenderValue;
+
             Assert.Same(expected, actual);
         }
 
@@ -30,6 +31,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.RenderedAs((model, _) => model.Name);
+
             Assert.Same(expected, actual);
         }
 
@@ -37,8 +39,10 @@ namespace Forged.Grid.Tests
         public void RenderedAs_SetsRenderValue()
         {
             GridModel gridModel = new GridModel { Name = "Test" };
+
             object? actual = column.RenderedAs(model => model.Name).RenderValue?.Invoke(gridModel, 0);
             object? expected = gridModel.Name;
+
             Assert.Same(expected, actual);
         }
 
@@ -47,6 +51,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.RenderedAs(model => model.Name);
+
             Assert.Same(expected, actual);
         }
 
@@ -56,8 +61,10 @@ namespace Forged.Grid.Tests
         public void UsingFilterOptions_SetsDefaultFilterMethod(string current, string method)
         {
             column.Filter.DefaultMethod = current;
+
             string? actual = column.UsingFilterOptions(Array.Empty<SelectListItem>()).Filter.DefaultMethod;
             string? expected = method;
+
             Assert.Equal(expected, actual);
         }
 
@@ -66,6 +73,7 @@ namespace Forged.Grid.Tests
         {
             IEnumerable<SelectListItem> expected = Array.Empty<SelectListItem>();
             IEnumerable<SelectListItem> actual = column.UsingFilterOptions(expected).Filter.Options;
+
             Assert.Same(expected, actual);
         }
 
@@ -79,6 +87,7 @@ namespace Forged.Grid.Tests
                 new GridModel { Name = "Next" },
                 new GridModel { Name = "Last" }
             }.AsQueryable();
+
             using IEnumerator<SelectListItem> actual = column.UsingFilterOptions().Filter.Options.GetEnumerator();
             using IEnumerator<SelectListItem> expected = new List<SelectListItem>
             {
@@ -87,6 +96,7 @@ namespace Forged.Grid.Tests
                 new SelectListItem { Value = "Next", Text = "Next" },
                 new SelectListItem { Value = "Test", Text = "Test" }
             }.GetEnumerator();
+
             while (expected.MoveNext() | actual.MoveNext())
             {
                 Assert.Same(expected.Current.Value, actual.Current.Value);
@@ -101,8 +111,10 @@ namespace Forged.Grid.Tests
         public void UsingFilterOptions_SetsIsEnabled(bool? current, bool enabled)
         {
             column.Filter.IsEnabled = current;
+
             bool? actual = column.UsingFilterOptions(Array.Empty<SelectListItem>()).Filter.IsEnabled;
             bool? expected = enabled;
+
             Assert.Equal(expected, actual);
         }
 
@@ -111,6 +123,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.UsingFilterOptions(Array.Empty<SelectListItem>());
+
             Assert.Same(expected, actual);
         }
 
@@ -119,6 +132,7 @@ namespace Forged.Grid.Tests
         {
             string expected = "test";
             string actual = column.UsingDefaultFilterMethod("test").Filter.DefaultMethod;
+
             Assert.Same(expected, actual);
         }
 
@@ -129,8 +143,10 @@ namespace Forged.Grid.Tests
         public void UsingDefaultFilterMethod_SetsIsEnabled(bool? current, bool enabled)
         {
             column.Filter.IsEnabled = current;
+
             bool? actual = column.UsingDefaultFilterMethod("test").Filter.IsEnabled;
             bool? expected = enabled;
+
             Assert.Equal(expected, actual);
         }
 
@@ -139,6 +155,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.UsingDefaultFilterMethod("test");
+
             Assert.Same(expected, actual);
         }
 
@@ -149,8 +166,10 @@ namespace Forged.Grid.Tests
         public void Filterable_Configure_SetsIsEnabled(bool? current, bool enabled)
         {
             column.Filter.IsEnabled = current;
+
             bool? actual = column.Filterable(_ => { }).Filter.IsEnabled;
             bool? expected = enabled;
+
             Assert.Equal(expected, actual);
         }
 
@@ -158,7 +177,9 @@ namespace Forged.Grid.Tests
         public void Filterable_ConfiguresColumn()
         {
             column.Filter.IsEnabled = null;
+
             column.Filterable(filter => filter.IsEnabled = false);
+
             Assert.False(column.Filter.IsEnabled);
         }
 
@@ -167,6 +188,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Filterable(_ => { });
+
             Assert.Same(expected, actual);
         }
 
@@ -177,8 +199,10 @@ namespace Forged.Grid.Tests
         public void Filterable_Case_SetsIsEnabled(bool? current, bool enabled)
         {
             column.Filter.IsEnabled = current;
+
             bool? actual = column.Filterable(GridFilterCase.Lower).Filter.IsEnabled;
             bool? expected = enabled;
+
             Assert.Equal(expected, actual);
         }
 
@@ -187,6 +211,7 @@ namespace Forged.Grid.Tests
         {
             GridFilterCase? actual = column.Filterable(GridFilterCase.Lower).Filter.Case;
             GridFilterCase? expected = GridFilterCase.Lower;
+
             Assert.Equal(expected, actual);
         }
 
@@ -195,6 +220,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Filterable(GridFilterCase.Lower);
+
             Assert.Same(expected, actual);
         }
 
@@ -205,6 +231,7 @@ namespace Forged.Grid.Tests
         {
             bool? actual = column.Filterable(isEnabled).Filter.IsEnabled;
             bool? expected = isEnabled;
+
             Assert.Equal(expected, actual);
         }
 
@@ -213,6 +240,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Filterable(true);
+
             Assert.Same(expected, actual);
         }
 
@@ -221,6 +249,7 @@ namespace Forged.Grid.Tests
         {
             GridFilterType? actual = column.Filterable(GridFilterType.Double).Filter.Type;
             GridFilterType? expected = GridFilterType.Double;
+
             Assert.Equal(expected, actual);
         }
 
@@ -231,8 +260,10 @@ namespace Forged.Grid.Tests
         public void Filterable_Type_SetsIsEnabled(bool? current, bool enabled)
         {
             column.Filter.IsEnabled = current;
+
             bool? actual = column.Filterable(GridFilterType.Single).Filter.IsEnabled;
             bool? expected = enabled;
+
             Assert.Equal(expected, actual);
         }
 
@@ -241,6 +272,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Filterable(GridFilterType.Single);
+
             Assert.Same(expected, actual);
         }
 
@@ -251,8 +283,10 @@ namespace Forged.Grid.Tests
         public void Filterable_Name_SetsIsEnabled(bool? current, bool enabled)
         {
             column.Filter.IsEnabled = current;
+
             bool? actual = column.Filterable("test").Filter.IsEnabled;
             bool? expected = enabled;
+
             Assert.Equal(expected, actual);
         }
 
@@ -261,6 +295,7 @@ namespace Forged.Grid.Tests
         {
             string expected = "Numeric";
             string actual = column.Filterable("Numeric").Filter.Name;
+
             Assert.Equal(expected, actual);
         }
 
@@ -269,6 +304,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Filterable("Numeric");
+
             Assert.Same(expected, actual);
         }
 
@@ -277,6 +313,7 @@ namespace Forged.Grid.Tests
         {
             GridSortOrder? actual = column.Sortable(GridSortOrder.Desc).Sort.FirstOrder;
             GridSortOrder? expected = GridSortOrder.Desc;
+
             Assert.Equal(expected, actual);
         }
 
@@ -287,8 +324,10 @@ namespace Forged.Grid.Tests
         public void Sortable_FirstOrder_SetsIsEnabled(bool? current, bool enabled)
         {
             column.Sort.IsEnabled = current;
+
             bool? actual = column.Sortable(GridSortOrder.Desc).Sort.IsEnabled;
             bool? expected = enabled;
+
             Assert.Equal(expected, actual);
         }
 
@@ -297,6 +336,7 @@ namespace Forged.Grid.Tests
         {
             object actual = column.Sortable(GridSortOrder.Desc);
             object expected = column;
+
             Assert.Same(expected, actual);
         }
 
@@ -307,6 +347,7 @@ namespace Forged.Grid.Tests
         {
             bool? actual = column.Sortable(isEnabled).Sort.IsEnabled;
             bool? expected = isEnabled;
+
             Assert.Equal(expected, actual);
         }
 
@@ -315,6 +356,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Sortable(true);
+
             Assert.Same(expected, actual);
         }
 
@@ -329,6 +371,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Encoded(true);
+
             Assert.Same(expected, actual);
         }
 
@@ -337,6 +380,7 @@ namespace Forged.Grid.Tests
         {
             string? expected = "Format";
             string? actual = column.Formatted("Format").Format;
+
             Assert.Equal(expected, actual);
         }
 
@@ -345,6 +389,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Formatted("Format");
+
             Assert.Same(expected, actual);
         }
 
@@ -376,8 +421,10 @@ namespace Forged.Grid.Tests
         public void AppendsCss_Classes(string current, string toAppend, string css)
         {
             column.CssClasses = current;
+
             string? expected = css;
             string? actual = column.AppendCss(toAppend).CssClasses;
+
             Assert.Equal(expected, actual);
         }
 
@@ -386,6 +433,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.AppendCss("column-class");
+
             Assert.Same(expected, actual);
         }
 
@@ -398,6 +446,7 @@ namespace Forged.Grid.Tests
         {
             object expected = title;
             object actual = column.Titled(rawTitle).Title;
+
             Assert.Equal(expected, actual);
         }
 
@@ -406,6 +455,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Titled("Title");
+
             Assert.Same(expected, actual);
         }
 
@@ -414,6 +464,7 @@ namespace Forged.Grid.Tests
         {
             string expected = "Test";
             string actual = column.Named("Test").Name;
+
             Assert.Equal(expected, actual);
         }
 
@@ -422,6 +473,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Named("Name");
+
             Assert.Same(expected, actual);
         }
 
@@ -430,6 +482,7 @@ namespace Forged.Grid.Tests
         {
             string actual = column.Css(" column-class ").CssClasses;
             string expected = "column-class";
+
             Assert.Equal(expected, actual);
         }
 
@@ -438,6 +491,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Css("");
+
             Assert.Same(expected, actual);
         }
 
@@ -445,6 +499,7 @@ namespace Forged.Grid.Tests
         public void Hidden_SetsHidden()
         {
             column.IsHidden = false;
+
             Assert.True(column.Hidden().IsHidden);
         }
 
@@ -453,6 +508,7 @@ namespace Forged.Grid.Tests
         {
             object expected = column;
             object actual = column.Hidden();
+
             Assert.Same(expected, actual);
         }
 
@@ -469,6 +525,7 @@ namespace Forged.Grid.Tests
             column.Filter.Type = GridFilterType.Double;
             column.Sort.FirstOrder = GridSortOrder.Desc;
             column.Filter.First = Substitute.For<IGridFilter>();
+
             Assert.Empty(column.AsAttributes());
         }
 
@@ -487,7 +544,9 @@ namespace Forged.Grid.Tests
             column.Filter.DefaultMethod = "";
             column.Grid.Query = new QueryCollection();
             column.Sort.FirstOrder = GridSortOrder.Asc;
+
             IDictionary<string, object?> actual = column.AsAttributes();
+
             Assert.Single(actual);
             Assert.Equal("filterable sortable", actual["class"]);
         }
@@ -506,8 +565,10 @@ namespace Forged.Grid.Tests
             column.Sort.FirstOrder = GridSortOrder.Desc;
             column.Filter.First = Substitute.For<IGridFilter>();
             column.Grid.Query = HttpUtility.ParseQueryString("sort=name asc");
+
             IDictionary<string, object?> actual = column.AsAttributes();
-            Assert.Equal("test-classes filterable sortable asc forged-grid-hidden", actual["class"]);
+
+            Assert.Equal("test-classes filterable sortable asc mvc-grid-hidden", actual["class"]);
             Assert.Equal(GridFilterType.Double, actual["data-filter-type"]);
             Assert.Equal("equals", actual["data-filter-default-method"]);
             Assert.Equal(GridSortOrder.Desc, actual["data-sort-first"]);

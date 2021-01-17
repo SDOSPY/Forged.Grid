@@ -24,8 +24,10 @@ namespace Forged.Grid.Tests
                 data_temp = 10000,
                 data_null = (string?)null
             }).WriteTo(writer, HtmlEncoder.Default);
+
             string? expected = " id=\"\" src=\"test.png\" data-temp=\"10000\"";
             string? actual = writer.ToString();
+
             Assert.Equal(expected, actual);
         }
 
@@ -34,8 +36,10 @@ namespace Forged.Grid.Tests
         {
             TextWriter writer = new StringWriter();
             new GridHtmlAttributes(new { value = "Temp \"str\"" }).WriteTo(writer, HtmlEncoder.Default);
+
             string? expected = " value=\"Temp &quot;str&quot;\"";
             string? actual = writer.ToString();
+
             Assert.Equal(expected, actual);
         }
     }

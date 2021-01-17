@@ -9,10 +9,10 @@ namespace Forged.Grid.Tests
 {
     public class DateTimeFilterTests
     {
-        private readonly Expression<Func<GridModel, DateTime?>> nDateExpression;
-        private readonly Expression<Func<GridModel, DateTime>> dateExpression;
-        private readonly IQueryable<GridModel> items;
-        private readonly DateTimeFilter filter;
+        private Expression<Func<GridModel, DateTime?>> nDateExpression;
+        private Expression<Func<GridModel, DateTime>> dateExpression;
+        private IQueryable<GridModel> items;
+        private DateTimeFilter filter;
 
         public DateTimeFilterTests()
         {
@@ -22,6 +22,7 @@ namespace Forged.Grid.Tests
                 new GridModel { Date = new DateTime(2014, 01, 01), NDate = new DateTime(2015, 01, 01) },
                 new GridModel { Date = new DateTime(2015, 01, 01), NDate = new DateTime(2014, 01, 01) }
             }.AsQueryable();
+
             nDateExpression = (model) => model.NDate;
             dateExpression = (model) => model.Date;
             filter = new DateTimeFilter();
@@ -31,6 +32,7 @@ namespace Forged.Grid.Tests
         public void Apply_BadValue_ReturnsItems()
         {
             filter.Values = "Test";
+
             Assert.Null(filter.Apply(dateExpression.Body));
         }
 
@@ -41,8 +43,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "equals";
             filter.Values = value;
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate == (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -51,8 +55,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "equals";
             filter.Values = new[] { "", "2014-01-01" };
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate == null || model.NDate == new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -63,8 +69,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "equals";
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date == (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -73,8 +81,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "equals";
             filter.Values = new[] { "2013-01-01", "2014-01-01" };
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date == new DateTime(2013, 1, 1) || model.Date == new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -85,8 +95,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "not-equals";
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate != (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -95,8 +107,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "not-equals";
             filter.Values = new[] { "", "2014-01-01" };
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate != null && model.NDate != new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -107,8 +121,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "not-equals";
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date != (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -117,8 +133,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "not-equals";
             filter.Values = new[] { "2013-01-01", "2014-01-01" };
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date != new DateTime(2013, 1, 1) && model.Date != new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -129,8 +147,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "earlier-than";
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate < (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -139,8 +159,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "earlier-than";
             filter.Values = new[] { "", "2014-01-01" };
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate < new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -151,8 +173,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "earlier-than";
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date < (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -161,8 +185,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "earlier-than";
             filter.Values = new[] { "2013-01-01", "2014-01-01" };
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date < new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -173,8 +199,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "later-than";
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate > (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -183,8 +211,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "later-than";
             filter.Values = new[] { "", "2014-01-01" };
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate > new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -195,8 +225,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "later-than";
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date > (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -205,8 +237,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "later-than";
             filter.Values = new[] { "2013-01-01", "2014-01-01" };
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date > new DateTime(2013, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -217,8 +251,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "earlier-than-or-equal";
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate <= (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -227,8 +263,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "earlier-than-or-equal";
             filter.Values = new[] { "", "2014-01-01" };
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate <= new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -239,8 +277,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "earlier-than-or-equal";
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date <= (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -249,8 +289,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "earlier-than-or-equal";
             filter.Values = new[] { "2013-01-01", "2014-01-01" };
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date <= new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -261,8 +303,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "later-than-or-equal";
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate >= (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -271,8 +315,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "later-than-or-equal";
             filter.Values = new[] { "", "2014-01-01" };
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate >= new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -283,8 +329,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "later-than-or-equal";
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date >= (string.IsNullOrEmpty(value) ? null : (DateTime?)DateTime.Parse(value)));
+
             Assert.Equal(expected, actual);
         }
 
@@ -293,8 +341,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "later-than-or-equal";
             filter.Values = new[] { "", "2014-01-01" };
+
             IEnumerable actual = items.Where(dateExpression, filter);
             IEnumerable expected = items.Where(model => model.Date >= new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -303,8 +353,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "equals";
             filter.Values = new[] { "", "test", "2014-01-01" };
+
             IEnumerable actual = items.Where(nDateExpression, filter);
             IEnumerable expected = items.Where(model => model.NDate == null || model.NDate == new DateTime(2014, 1, 1));
+
             Assert.Equal(expected, actual);
         }
 
@@ -313,6 +365,7 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "equals";
             filter.Values = StringValues.Empty;
+
             Assert.Null(filter.Apply(dateExpression.Body));
         }
 
@@ -321,6 +374,7 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "test";
             filter.Values = "2014-01-01";
+
             Assert.Null(filter.Apply(dateExpression.Body));
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,87 +25,103 @@ namespace Forged.Grid
             BooleanTrueOptionText = () => "True";
             BooleanFalseOptionText = () => "False";
             Filters = new Dictionary<Type, IDictionary<string, Type>>();
+
             Register(typeof(sbyte), "equals", typeof(NumberFilter<sbyte>));
             Register(typeof(sbyte), "not-equals", typeof(NumberFilter<sbyte>));
             Register(typeof(sbyte), "less-than", typeof(NumberFilter<sbyte>));
             Register(typeof(sbyte), "greater-than", typeof(NumberFilter<sbyte>));
             Register(typeof(sbyte), "less-than-or-equal", typeof(NumberFilter<sbyte>));
             Register(typeof(sbyte), "greater-than-or-equal", typeof(NumberFilter<sbyte>));
+
             Register(typeof(byte), "equals", typeof(NumberFilter<byte>));
             Register(typeof(byte), "not-equals", typeof(NumberFilter<byte>));
             Register(typeof(byte), "less-than", typeof(NumberFilter<byte>));
             Register(typeof(byte), "greater-than", typeof(NumberFilter<byte>));
             Register(typeof(byte), "less-than-or-equal", typeof(NumberFilter<byte>));
             Register(typeof(byte), "greater-than-or-equal", typeof(NumberFilter<byte>));
+
             Register(typeof(short), "equals", typeof(NumberFilter<short>));
             Register(typeof(short), "not-equals", typeof(NumberFilter<short>));
             Register(typeof(short), "less-than", typeof(NumberFilter<short>));
             Register(typeof(short), "greater-than", typeof(NumberFilter<short>));
             Register(typeof(short), "less-than-or-equal", typeof(NumberFilter<short>));
             Register(typeof(short), "greater-than-or-equal", typeof(NumberFilter<short>));
+
             Register(typeof(ushort), "equals", typeof(NumberFilter<ushort>));
             Register(typeof(ushort), "not-equals", typeof(NumberFilter<ushort>));
             Register(typeof(ushort), "less-than", typeof(NumberFilter<ushort>));
             Register(typeof(ushort), "greater-than", typeof(NumberFilter<ushort>));
             Register(typeof(ushort), "less-than-or-equal", typeof(NumberFilter<ushort>));
             Register(typeof(ushort), "greater-than-or-equal", typeof(NumberFilter<ushort>));
+
             Register(typeof(int), "equals", typeof(NumberFilter<int>));
             Register(typeof(int), "not-equals", typeof(NumberFilter<int>));
             Register(typeof(int), "less-than", typeof(NumberFilter<int>));
             Register(typeof(int), "greater-than", typeof(NumberFilter<int>));
             Register(typeof(int), "less-than-or-equal", typeof(NumberFilter<int>));
             Register(typeof(int), "greater-than-or-equal", typeof(NumberFilter<int>));
+
             Register(typeof(uint), "equals", typeof(NumberFilter<uint>));
             Register(typeof(uint), "not-equals", typeof(NumberFilter<uint>));
             Register(typeof(uint), "less-than", typeof(NumberFilter<uint>));
             Register(typeof(uint), "greater-than", typeof(NumberFilter<uint>));
             Register(typeof(uint), "less-than-or-equal", typeof(NumberFilter<uint>));
             Register(typeof(uint), "greater-than-or-equal", typeof(NumberFilter<uint>));
+
             Register(typeof(long), "equals", typeof(NumberFilter<long>));
             Register(typeof(long), "not-equals", typeof(NumberFilter<long>));
             Register(typeof(long), "less-than", typeof(NumberFilter<long>));
             Register(typeof(long), "greater-than", typeof(NumberFilter<long>));
             Register(typeof(long), "less-than-or-equal", typeof(NumberFilter<long>));
             Register(typeof(long), "greater-than-or-equal", typeof(NumberFilter<long>));
+
             Register(typeof(ulong), "equals", typeof(NumberFilter<ulong>));
             Register(typeof(ulong), "not-equals", typeof(NumberFilter<ulong>));
             Register(typeof(ulong), "less-than", typeof(NumberFilter<ulong>));
             Register(typeof(ulong), "greater-than", typeof(NumberFilter<ulong>));
             Register(typeof(ulong), "less-than-or-equal", typeof(NumberFilter<ulong>));
             Register(typeof(ulong), "greater-than-or-equal", typeof(NumberFilter<ulong>));
+
             Register(typeof(float), "equals", typeof(NumberFilter<float>));
             Register(typeof(float), "not-equals", typeof(NumberFilter<float>));
             Register(typeof(float), "less-than", typeof(NumberFilter<float>));
             Register(typeof(float), "greater-than", typeof(NumberFilter<float>));
             Register(typeof(float), "less-than-or-equal", typeof(NumberFilter<float>));
             Register(typeof(float), "greater-than-or-equal", typeof(NumberFilter<float>));
+
             Register(typeof(double), "equals", typeof(NumberFilter<double>));
             Register(typeof(double), "not-equals", typeof(NumberFilter<double>));
             Register(typeof(double), "less-than", typeof(NumberFilter<double>));
             Register(typeof(double), "greater-than", typeof(NumberFilter<double>));
             Register(typeof(double), "less-than-or-equal", typeof(NumberFilter<double>));
             Register(typeof(double), "greater-than-or-equal", typeof(NumberFilter<double>));
+
             Register(typeof(decimal), "equals", typeof(NumberFilter<decimal>));
             Register(typeof(decimal), "not-equals", typeof(NumberFilter<decimal>));
             Register(typeof(decimal), "less-than", typeof(NumberFilter<decimal>));
             Register(typeof(decimal), "greater-than", typeof(NumberFilter<decimal>));
             Register(typeof(decimal), "less-than-or-equal", typeof(NumberFilter<decimal>));
             Register(typeof(decimal), "greater-than-or-equal", typeof(NumberFilter<decimal>));
+
             Register(typeof(DateTime), "equals", typeof(DateTimeFilter));
             Register(typeof(DateTime), "not-equals", typeof(DateTimeFilter));
             Register(typeof(DateTime), "earlier-than", typeof(DateTimeFilter));
             Register(typeof(DateTime), "later-than", typeof(DateTimeFilter));
             Register(typeof(DateTime), "earlier-than-or-equal", typeof(DateTimeFilter));
             Register(typeof(DateTime), "later-than-or-equal", typeof(DateTimeFilter));
+
             Register(typeof(bool), "equals", typeof(BooleanFilter));
             Register(typeof(bool), "not-equals", typeof(BooleanFilter));
+
             Register(typeof(string), "equals", typeof(StringFilter));
             Register(typeof(string), "not-equals", typeof(StringFilter));
             Register(typeof(string), "contains", typeof(StringFilter));
             Register(typeof(string), "ends-with", typeof(StringFilter));
             Register(typeof(string), "starts-with", typeof(StringFilter));
+
             Register(typeof(Enum), "equals", typeof(EnumFilter));
             Register(typeof(Enum), "not-equals", typeof(EnumFilter));
+
             Register(typeof(Guid), "equals", typeof(GuidFilter));
             Register(typeof(Guid), "not-equals", typeof(GuidFilter));
         }
@@ -180,9 +197,7 @@ namespace Forged.Grid
                     return typeof(EnumerableFilter<>).MakeGenericType(filter);
             }
             else if (type.IsEnum && TryGet(typeof(Enum), method, out filter))
-            {
                 return filter;
-            }
             return null;
         }
         private Type? GetElementType(Type type)

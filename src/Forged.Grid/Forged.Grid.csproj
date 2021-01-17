@@ -1,13 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
+    <Nullable>enable</Nullable>
     <Company>SDOSPY</Company>
+    <LangVersion>8.0</LangVersion>
+    <PackageId>Forged.Grid.Core</PackageId>
+    <GenerateFullPaths>true</GenerateFullPaths>
     <Copyright>Copyright © SDOSPY</Copyright>
-    <PackageLicenseFile>gpl-3.0.txt</PackageLicenseFile>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Forged.Grid</RootNamespace>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType Condition="'$(Configuration)'=='Release'">none</DebugType>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/SDOSPY/Forged.Grid</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
+    <PackageLicenseFile>gpl-3.0.txt</PackageLicenseFile>
+    <PackageTags>Forged, Grid, Control</PackageTags>
+    <Description>Permite la creación de una Grid para ASP.NET Core</Description>
+    <Title>Control Grid para ASP.NET Core MVC</Title>
+    <PackageIcon>favicon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +30,9 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+    <None Include="..\sample\Forged.Grid.Web\wwwroot\favicon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
-
 </Project>

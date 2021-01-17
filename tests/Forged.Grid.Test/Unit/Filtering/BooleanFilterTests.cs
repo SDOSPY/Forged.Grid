@@ -9,10 +9,10 @@ namespace Forged.Grid.Tests
 {
     public class BooleanFilterTests
     {
-        private readonly BooleanFilter filter;
-        private readonly IQueryable<GridModel> items;
-        private readonly Expression<Func<GridModel, bool>> booleanExpression;
-        private readonly Expression<Func<GridModel, bool?>> nBooleanExpression;
+        private BooleanFilter filter;
+        private IQueryable<GridModel> items;
+        private Expression<Func<GridModel, bool>> booleanExpression;
+        private Expression<Func<GridModel, bool?>> nBooleanExpression;
 
         public BooleanFilterTests()
         {
@@ -22,6 +22,7 @@ namespace Forged.Grid.Tests
                 new GridModel { IsChecked = true, NIsChecked = false },
                 new GridModel { IsChecked = false, NIsChecked = true }
             }.AsQueryable();
+
             filter = new BooleanFilter();
             booleanExpression = (model) => model.IsChecked;
             nBooleanExpression = (model) => model.NIsChecked;
@@ -32,6 +33,7 @@ namespace Forged.Grid.Tests
         {
             filter.Values = "Test";
             filter.Method = "equals";
+
             Assert.Null(filter.Apply(booleanExpression.Body));
         }
 
@@ -45,8 +47,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "equals";
+
             IEnumerable actual = items.Where(nBooleanExpression, filter);
             IEnumerable expected = items.Where(model => model.NIsChecked == isChecked);
+
             Assert.Equal(expected, actual);
         }
 
@@ -55,8 +59,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "equals";
             filter.Values = new[] { "", "false" };
+
             IEnumerable actual = items.Where(nBooleanExpression, filter);
             IEnumerable expected = items.Where(model => model.NIsChecked != true);
+
             Assert.Equal(expected, actual);
         }
 
@@ -70,8 +76,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "equals";
+
             IEnumerable actual = items.Where(booleanExpression, filter);
             IEnumerable expected = items.Where(model => model.IsChecked == isChecked);
+
             Assert.Equal(expected, actual);
         }
 
@@ -80,8 +88,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "equals";
             filter.Values = new[] { "true", "false" };
+
             IEnumerable expected = items;
             IEnumerable actual = items.Where(booleanExpression, filter);
+
             Assert.Equal(expected, actual);
         }
 
@@ -95,8 +105,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "not-equals";
+
             IEnumerable actual = items.Where(nBooleanExpression, filter);
             IEnumerable expected = items.Where(model => model.NIsChecked != isChecked);
+
             Assert.Equal(expected, actual);
         }
 
@@ -105,8 +117,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "not-equals";
             filter.Values = new[] { "", "false" };
+
             IEnumerable actual = items.Where(nBooleanExpression, filter);
             IEnumerable expected = items.Where(model => model.NIsChecked == true);
+
             Assert.Equal(expected, actual);
         }
 
@@ -120,8 +134,10 @@ namespace Forged.Grid.Tests
         {
             filter.Values = value;
             filter.Method = "not-equals";
+
             IEnumerable actual = items.Where(booleanExpression, filter);
             IEnumerable expected = items.Where(model => model.IsChecked != isChecked);
+
             Assert.Equal(expected, actual);
         }
 
@@ -130,6 +146,7 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "not-equals";
             filter.Values = new[] { "true", "false" };
+
             Assert.Empty(items.Where(booleanExpression, filter));
         }
 
@@ -138,8 +155,10 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "equals";
             filter.Values = new[] { "", "test", "false" };
+
             IEnumerable actual = items.Where(nBooleanExpression, filter);
             IEnumerable expected = items.Where(model => model.NIsChecked != true);
+
             Assert.Equal(expected, actual);
         }
 
@@ -148,6 +167,7 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "equals";
             filter.Values = StringValues.Empty;
+
             Assert.Null(filter.Apply(booleanExpression.Body));
         }
 
@@ -156,6 +176,7 @@ namespace Forged.Grid.Tests
         {
             filter.Method = "test";
             filter.Values = "false";
+
             Assert.Null(filter.Apply(booleanExpression.Body));
         }
     }

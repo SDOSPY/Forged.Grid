@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,6 +42,7 @@ namespace Forged.Grid
             Mode = GridProcessingMode.Automatic;
             Attributes = new GridHtmlAttributes();
             Processors = new HashSet<IGridProcessor<T>>();
+
             Columns = new GridColumns<T>(this);
             Rows = new GridRows<T>(this);
             Sort = new GridSort<T>(this);

@@ -14,14 +14,16 @@ namespace Forged.Grid.Tests
 {
     public class HtmlGridTests
     {
-        private readonly HtmlGrid<GridModel> htmlGrid;
+        private HtmlGrid<GridModel> htmlGrid;
 
         public HtmlGridTests()
         {
             IHtmlHelper html = Substitute.For<IHtmlHelper>();
             IGrid<GridModel> grid = new Grid<GridModel>(new GridModel[8]);
             html.ViewContext.Returns(new ViewContext { HttpContext = new DefaultHttpContext() });
+
             htmlGrid = new HtmlGrid<GridModel>(html, grid);
+
             grid.Columns.Add(model => model.Name);
             grid.Columns.Add(model => model.Sum);
         }
@@ -31,6 +33,7 @@ namespace Forged.Grid.Tests
         {
             object? expected = htmlGrid.Grid.Query = new QueryCollection();
             object? actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.Query;
+
             Assert.Same(expected, actual);
         }
 
@@ -40,8 +43,10 @@ namespace Forged.Grid.Tests
             htmlGrid.Grid.Query = null;
             htmlGrid.Html.ViewContext.Returns(new ViewContext());
             htmlGrid.Html.ViewContext.HttpContext = new DefaultHttpContext();
+
             object? expected = htmlGrid.Html.ViewContext.HttpContext.Request.Query;
             object? actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.Query;
+
             Assert.Same(expected, actual);
             Assert.NotNull(actual);
         }
@@ -51,6 +56,7 @@ namespace Forged.Grid.Tests
         {
             htmlGrid.Grid.Query = null;
             htmlGrid.Html.ViewContext.ReturnsNull();
+
             Assert.Empty(new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.Query);
         }
 
@@ -59,8 +65,10 @@ namespace Forged.Grid.Tests
         {
             htmlGrid.Grid.ViewContext = new ViewContext { HttpContext = new DefaultHttpContext() };
             htmlGrid.Html.ViewContext.Returns(new ViewContext { HttpContext = new DefaultHttpContext() });
+
             object? expected = htmlGrid.Grid.ViewContext;
             object? actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.ViewContext;
+
             Assert.Same(expected, actual);
         }
 
@@ -70,8 +78,10 @@ namespace Forged.Grid.Tests
             htmlGrid.Grid.ViewContext = null;
             htmlGrid.Html.ViewContext.Returns(new ViewContext());
             htmlGrid.Html.ViewContext.HttpContext = new DefaultHttpContext();
+
             object? actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid.ViewContext;
             object? expected = htmlGrid.Html.ViewContext;
+
             Assert.Same(expected, actual);
         }
 
@@ -80,6 +90,7 @@ namespace Forged.Grid.Tests
         {
             string actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).PartialViewName;
             string expected = "ForgedGrid/_Grid";
+
             Assert.Equal(expected, actual);
         }
 
@@ -88,6 +99,7 @@ namespace Forged.Grid.Tests
         {
             object actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Html;
             object expected = htmlGrid.Html;
+
             Assert.Same(expected, actual);
         }
 
@@ -96,6 +108,7 @@ namespace Forged.Grid.Tests
         {
             object actual = new HtmlGrid<GridModel>(htmlGrid.Html, htmlGrid.Grid).Grid;
             object expected = htmlGrid.Grid;
+
             Assert.Same(expected, actual);
         }
 
@@ -105,9 +118,12 @@ namespace Forged.Grid.Tests
             StringWriter writer = new StringWriter();
             Task<IHtmlContent> view = Task.FromResult<IHtmlContent>(new HtmlString("Test"));
             htmlGrid.Html.PartialAsync(htmlGrid.PartialViewName, htmlGrid.Grid, null).Returns(view);
+
             htmlGrid.WriteTo(writer, HtmlEncoder.Default);
+
             string actual = writer.GetStringBuilder().ToString();
             string expected = "Test";
+
             Assert.Equal(expected, actual);
         }
     }

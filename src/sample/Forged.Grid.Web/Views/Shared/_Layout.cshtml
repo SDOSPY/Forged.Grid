@@ -1,0 +1,133 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="grid,table,ajax,mvc,core" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Control de cuadrícula para proyectos ASP.NET MVC.">
+    <title>@ViewBag.Title</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+
+    <environment names="Development">
+        <link href="~/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="~/css/font-awesome/font-awesome.css" rel="stylesheet">
+        <link href="~/css/forged-grid/forged-grid.css" rel="stylesheet">
+        <link href="~/css/shared/base.css" rel="stylesheet">
+    </environment>
+    <environment names="Staging,Production">
+        <link asp-append-version="true" href="~/css/page/bundle.min.css" rel="stylesheet">
+    </environment>
+</head>
+<body class="container-fluid">
+    <div class="row">
+        <div class="sidebar col-lg-2">
+            <div class="logo">
+                <a href="https://github.com/SDOSPY/Forged.Grid">
+                    <span class="fa">
+                        <img src="~/logo-sdospy.png" width="60" height="60"/>
+                        <span class="version">v@(typeof(IGrid).Assembly.GetName().Version)</span>
+                    </span>
+                </a>
+            </div>
+            <input id="SearchInput" class="sidebar-search" placeholder="Search...">
+            <ul>
+                <li>
+                    <a asp-action="Index">Inicio rápido</a>
+                </li>
+                <li>
+                    <a asp-action="Installation">Instalación</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a asp-action="Formatting">Formato</a>
+                </li>
+                <li>
+                    <a asp-action="Encoding">Codificación</a>
+                </li>
+                <li>
+                    <a asp-action="Filtering">Filtrado</a>
+                </li>
+                <li>
+                    <a asp-action="Sorting">Clasificación</a>
+                </li>
+                <li>
+                    <a asp-action="Paging">Paginación</a>
+                </li>
+                <li>
+                    <a asp-action="Footer">Pié de cuadrícula</a>
+                </li>
+                <li>
+                    <a asp-action="Export">Exportar</a>
+                </li>
+                <li>
+                    <a asp-action="Events">Eventos</a>
+                </li>
+                <li>
+                    <a asp-action="Api">Api</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a asp-action="Ajax">Ajax</a>
+                </li>
+                <li>
+                    <a asp-action="Localization">Localization</a>
+                </li>
+                <li>
+                    <a asp-action="FilterModes">Modos de filtrado</a>
+                </li>
+                <li>
+                    <a asp-action="GlobalSearch">Núsqueda Global</a>
+                </li>
+                <li>
+                    <a asp-action="Multiple">Múltiples cuadrícula</a>
+                </li>
+                <li>
+                    <a asp-action="Attributes">Atributos Html</a>
+                </li>
+                <li>
+                    <a asp-action="Partials">Parciales personalizados</a>
+                </li>
+                <li>
+                    <a asp-action="RowProcessing">Procesando Filas</a>
+                </li>
+                <li>
+                    <a asp-action="Preferences">Preferencias de Usuario</a>
+                </li>
+                <li>
+                    <a asp-action="DataTable">Fuente de datos DataTable</a>
+                </li>
+                <li>
+                    <a asp-action="ManualProcessing">Procesado manual</a>
+                </li>
+                <li>
+                    <a asp-action="SourceUrl">Cambiar la cuadrícula normal a la cuadrícula ajax</a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a asp-action="Register">Registrar Filtro</a>
+                </li>
+                <li>
+                    <a asp-action="Unregister">Desregistrar Filtro</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-lg-10">
+            @RenderBody()
+        </div>
+    </div>
+
+    <environment names="Development">
+        <script src="~/js/forged-grid/forged-grid.js"></script>
+        <script src="~/js/shared/site.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script asp-append-version="true" src="~/js/page/bundle.min.js"></script>
+    </environment>
+    @RenderSection("scripts", false)
+</body>
+</html>

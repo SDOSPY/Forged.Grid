@@ -1,15 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+VisualStudioVersion = 16.0.29318.209
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6BC63277-C8A1-49B5-B6BF-603A62F1B17C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid", "src\Forged.Grid\Forged.Grid.csproj", "{B60DB61E-9F25-4CF7-AA46-9115F42A01A7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid.Core", "src\Forged.Grid.Core\Forged.Grid.Core.csproj", "{2B153710-F7BA-4474-BB77-43F5C7F626CE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents Solution", "Documents Solution", "{1C5FA67E-DDCC-4805-A875-6895288FEFFC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{F2D2C2E8-3A03-42BD-B6EC-77599057502D}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
@@ -20,11 +14,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents Solution", "Docum
 		tsconfig.json = tsconfig.json
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{83C8879B-9653-4716-B2BB-86CD994728DD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BB94E04A-2273-4581-85DD-0BCE9D0E5F29}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid.Test", "tests\Forged.Grid.Test\Forged.Grid.Test.csproj", "{BC61D9D9-B93A-44DA-89E9-F79466885BED}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{261761CA-E6A6-40F4-94F4-7E4ECA03421A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid.Web", "src\Forged.Grid.Web\Forged.Grid.Web.csproj", "{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7DFD99D1-C18D-4092-911F-4918947B57EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid.Web", "src\sample\Forged.Grid.Web\Forged.Grid.Web.csproj", "{14984B72-3829-429E-A98E-E2A6DF70AC6F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid.Tests", "tests\Forged.Grid.Test\Forged.Grid.Tests.csproj", "{EAEF20E0-9B3D-4A49-9EDA-07B90706B8E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid.Core", "src\Forged.Grid.Core\Forged.Grid.Core.csproj", "{698E598C-3B5C-4920-B415-412BD6A9419E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forged.Grid", "src\Forged.Grid\Forged.Grid.csproj", "{E4BF50F1-B16D-4824-8851-8CDE6A13EE2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,33 +34,34 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B153710-F7BA-4474-BB77-43F5C7F626CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B153710-F7BA-4474-BB77-43F5C7F626CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B153710-F7BA-4474-BB77-43F5C7F626CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B153710-F7BA-4474-BB77-43F5C7F626CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC61D9D9-B93A-44DA-89E9-F79466885BED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14984B72-3829-429E-A98E-E2A6DF70AC6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14984B72-3829-429E-A98E-E2A6DF70AC6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14984B72-3829-429E-A98E-E2A6DF70AC6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14984B72-3829-429E-A98E-E2A6DF70AC6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEF20E0-9B3D-4A49-9EDA-07B90706B8E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEF20E0-9B3D-4A49-9EDA-07B90706B8E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEF20E0-9B3D-4A49-9EDA-07B90706B8E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEF20E0-9B3D-4A49-9EDA-07B90706B8E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{698E598C-3B5C-4920-B415-412BD6A9419E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{698E598C-3B5C-4920-B415-412BD6A9419E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{698E598C-3B5C-4920-B415-412BD6A9419E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{698E598C-3B5C-4920-B415-412BD6A9419E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4BF50F1-B16D-4824-8851-8CDE6A13EE2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4BF50F1-B16D-4824-8851-8CDE6A13EE2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4BF50F1-B16D-4824-8851-8CDE6A13EE2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4BF50F1-B16D-4824-8851-8CDE6A13EE2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B60DB61E-9F25-4CF7-AA46-9115F42A01A7} = {6BC63277-C8A1-49B5-B6BF-603A62F1B17C}
-		{2B153710-F7BA-4474-BB77-43F5C7F626CE} = {6BC63277-C8A1-49B5-B6BF-603A62F1B17C}
-		{BC61D9D9-B93A-44DA-89E9-F79466885BED} = {83C8879B-9653-4716-B2BB-86CD994728DD}
-		{06A4796E-A1A4-48CC-BEA6-1A7621CEFE91} = {6BC63277-C8A1-49B5-B6BF-603A62F1B17C}
+		{261761CA-E6A6-40F4-94F4-7E4ECA03421A} = {BB94E04A-2273-4581-85DD-0BCE9D0E5F29}
+		{14984B72-3829-429E-A98E-E2A6DF70AC6F} = {261761CA-E6A6-40F4-94F4-7E4ECA03421A}
+		{EAEF20E0-9B3D-4A49-9EDA-07B90706B8E4} = {7DFD99D1-C18D-4092-911F-4918947B57EC}
+		{698E598C-3B5C-4920-B415-412BD6A9419E} = {BB94E04A-2273-4581-85DD-0BCE9D0E5F29}
+		{E4BF50F1-B16D-4824-8851-8CDE6A13EE2C} = {BB94E04A-2273-4581-85DD-0BCE9D0E5F29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DB4070D4-80A2-49E1-8BB1-DA0C07C338CD}
+		SolutionGuid = {11DB3E01-BFFF-4B24-8B5A-40C466D35CC2}
 	EndGlobalSection
 EndGlobal

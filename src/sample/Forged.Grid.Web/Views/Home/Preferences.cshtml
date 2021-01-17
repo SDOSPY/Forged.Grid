@@ -1,0 +1,147 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid user preferences";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+        <div class="widget-buttons">
+            <span id="GridConfigure" class="fa fa-cog"></span>
+        </div>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name).Hidden();
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+            .Empty("No data found")
+            .Pageable(pager =>
+            {
+                pager.RowsPerPage = 4;
+            })
+            .Named("preferences")
+            .Filterable()
+            .Sortable()
+        )
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>MVC view</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>).Hidden();
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Empty(<span class="str">"No data found"</span>)
+    .Named(<span class="str">"preferences"</span>)
+    .Configure(...) <span class="com">// Load configuration from backend, otherwise use client side function.</span>
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>MVC controller</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+[<span class="cls">HttpGet</span>]
+<span class="kwd">public</span> <span class="cls">ViewResult</span> Index()
+{
+    <span class="kwd">return</span> View(Context.Set&lt;<span class="cls">Person</span>&gt;());
+}
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Javascript</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">const</span> configuration = localStorage.getItem(<span class="str">"grid-config"</span>);
+<span class="kwd">const</span> grid = <span class="kwd">new</span> <span class="cls">MvcGrid</span>(document.querySelector(<span class="str">".mvc-grid"</span>));
+
+<span class="kwd">if</span> (configuration) {
+    <span class="com">// Client side configuration function</span>
+    grid.configure(JSON.parse(configuration));
+}
+
+document.getElementById(<span class="str">"GridConfigure"</span>).addEventListener(<span class="str">"click"</span>, <span class="kwd">function</span> () {
+    <span class="kwd">new</span> <span class="cls">MvcGrid</span>(document.querySelector(<span class="str">".mvc-grid"</span>)).showConfiguration(<span class="kwd">this</span>);
+});
+
+document.addEventListener(<span class="str">"gridconfigure"</span>, e => {
+    <span class="kwd">const</span> grid = e.detail.grid;
+    <span class="kwd">const</span> configuration = grid.getConfiguration();
+
+    <span class="com">// Save configuration to a cookie/local storage/backend/etc.</span>
+    <span class="com">// Every configuration should have a unique name for every grid, preferrably grid name.</span>
+    localStorage.setItem(<span class="str">"grid-"</span> + grid.name, <span class="cls">JSON</span>.stringify(configuration));
+});
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        const configuration = localStorage.getItem("grid-config");
+        const grid = new MvcGrid(document.querySelector(".mvc-grid"));
+
+        if (configuration) {
+            grid.configure(JSON.parse(configuration));
+        }
+
+        document.getElementById("GridConfigure").addEventListener("click", function () {
+            grid.showConfiguration(this);
+        });
+
+        document.addEventListener("gridconfigure", function (e) {
+            localStorage.setItem("grid-config", JSON.stringify(e.detail.grid.getConfiguration()));
+        });
+    </script>
+}

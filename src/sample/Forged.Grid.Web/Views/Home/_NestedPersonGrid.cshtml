@@ -1,0 +1,59 @@
+﻿@model IGrid<Person>
+
+<div class="mvc-grid">
+    <table>
+        <thead>
+            <tr class="mvc-grid-headers">
+                @foreach (IGridColumn column in Model.Columns)
+                {
+                    <th@(column.AsAttributes())>
+                        <span class="mvc-grid-title">@column.Title</span>
+                    </th@>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Rows.Any())
+            {
+                foreach (IGridRow<Person> row in Model.Rows)
+                {
+                    <!tr@(row.Attributes)>
+                        @foreach (IGridColumn column in Model.Columns)
+                        {
+                            <td class="@column.CssClasses">@column.ValueFor(row)</td>
+                        }
+                    </!tr>
+
+                    if (row.Model.Children.Any())
+                    {
+                        <tr>
+                            <td colspan="@Model.Columns.Count()">
+                                @(Html
+                                    .Grid("_NestedPersonGrid", row.Model.Children)
+                                    .Build(columns =>
+                                    {
+                                        columns.Add(model => model.Name).Titled("Child name");
+                                        columns.Add(model => model.Age);
+                                        columns.Add(model => model.Birthday).Formatted("{0:d}");
+                                    })
+                                )
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+            else
+            {
+                <tr class="mvc-grid-empty-row">
+                    <td colspan="@Model.Columns.Count()">
+                        @Model.EmptyText
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (Model.Pager != null)
+    {
+        @await Html.PartialAsync(Model.Pager.PartialViewName, Model.Pager)
+    }
+</div>

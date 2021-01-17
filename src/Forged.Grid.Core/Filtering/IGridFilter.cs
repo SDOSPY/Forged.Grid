@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Primitives;
+
 using System.Linq.Expressions;
 
 namespace Forged.Grid

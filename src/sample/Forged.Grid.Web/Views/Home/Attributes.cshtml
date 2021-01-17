@@ -1,0 +1,103 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid html attributes";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Id).Css("collapse");
+
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age).Css("text-right");
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+            .Id("my-grid")
+            .Css("css-classes")
+            .AppendCss("table-hover")
+            .Attributed(new { data_type = "individuals" })
+            .RowAttributed(model => new { @class = model.IsWorking == true ? "working" : null, data_id = model.Id })
+        )
+    </div>
+</div>
+
+<div class="row">
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>View</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Id).Css(<span class="str">"collapse"</span>);
+
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.Age).Titled(<span class="str">"Age"</span>).Css(<span class="str">"text-right"</span>);
+        columns.Add(model => model.Birthday).Titled(<span class="str">"Birthday"</span>).Formatted(<span class="str">"{0:d}"</span>);
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Id(<span class="str">"my-grid"</span>)
+    .Css(<span class="str">"css-classes"</span>)
+    .AppendCss(<span class="str">"table-hover"</span>)
+    .Attributed(<span class="kwd">new</span> { data_type = <span class="str">"individuals"</span> })
+    .RowAttributed(model => <span class="kwd">new</span> { @@class = model.IsWorking == <span class="kwd">true</span> ? <span class="str">"working"</span> : <span class="kwd">null</span>, data_id = model.Id })
+)
+</code>
+</pre>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Rendered grid html</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+&lt;div id="my-grid" class="mvc-grid mvc-grid-excel-mode"&gt;
+    &lt;table class="css-classes table-hover" data-type="individuals"&gt;
+        ...
+        &lt;tbody&gt;
+            ...
+            &lt;tr data-id="2"&gt;...&lt;/tr&gt;
+            ...
+            ...
+            &lt;tr data-id="5"&gt;...&lt;/tr&gt;
+            ...
+            &lt;tr class="working" data-id="7"&gt;
+                ...
+                &lt;td class="text-right"&gt;53&lt;/td&gt;
+                ...
+            &lt;/tr&gt;
+            ...
+        &lt;/tbody&gt;
+        ...
+    &lt;/table&gt;
+&lt;/div&gt;
+</code>
+</pre>
+        </div>
+    </div>
+</div>

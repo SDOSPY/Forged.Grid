@@ -10,8 +10,8 @@ namespace Forged.Grid.Tests
 {
     public class GridFiltersTests
     {
-        private readonly GridFilters filters;
-        private readonly IGridColumn<GridModel, string?> column;
+        private GridFilters filters;
+        private IGridColumn<GridModel, string?> column;
 
         public GridFiltersTests()
         {
@@ -160,6 +160,7 @@ namespace Forged.Grid.Tests
         public void Create_ForNullableType()
         {
             IGridFilter? actual = filters.Create(typeof(int?), "EQUALS", "");
+
             Assert.Equal("equals", Assert.IsType<NumberFilter<int>>(actual).Method);
         }
 
@@ -169,7 +170,9 @@ namespace Forged.Grid.Tests
         public void Create_ForSpecificEnumType(Type type)
         {
             filters.Register(type, "equals", typeof(StringFilter));
+
             IGridFilter? actual = filters.Create(type, "EQUALS", "");
+
             Assert.Equal("equals", Assert.IsType<StringFilter>(actual).Method);
         }
 
@@ -179,6 +182,7 @@ namespace Forged.Grid.Tests
         public void Create_ForEnumType(Type type)
         {
             IGridFilter? actual = filters.Create(type, "EQUALS", "");
+
             Assert.Equal("equals", Assert.IsType<EnumFilter>(actual).Method);
         }
 
@@ -186,6 +190,7 @@ namespace Forged.Grid.Tests
         public void Create_ForType()
         {
             IGridFilter? actual = filters.Create(typeof(string), "CONTAINS", "");
+
             Assert.Equal("contains", Assert.IsType<StringFilter>(actual).Method);
         }
 
@@ -196,6 +201,7 @@ namespace Forged.Grid.Tests
         public void Create_ForEnumerableType(Type type)
         {
             IGridFilter? actual = filters.Create(type, "CONTAINS", "");
+
             Assert.Equal("contains", Assert.IsType<EnumerableFilter<StringFilter>>(actual).Method);
         }
 
@@ -203,6 +209,7 @@ namespace Forged.Grid.Tests
         public void Create_ForEnumerableEnumType()
         {
             IGridFilter? actual = filters.Create(typeof(IEnumerable<TestEnum>), "Equals", "");
+
             Assert.Equal("equals", Assert.IsType<EnumerableFilter<EnumFilter>>(actual).Method);
         }
 
@@ -210,6 +217,7 @@ namespace Forged.Grid.Tests
         public void OptionsFor_ForBoolean()
         {
             SelectListItem[] actual = filters.OptionsFor(Substitute.For<IGridColumn<GridModel, bool>>()).ToArray();
+
             Assert.Equal(3, actual.Length);
             Assert.Equal("", actual[0].Value);
             Assert.Equal("true", actual[1].Value);
@@ -223,6 +231,7 @@ namespace Forged.Grid.Tests
         public void OptionsFor_ForNullableBoolean()
         {
             SelectListItem[] actual = filters.OptionsFor(Substitute.For<IGridColumn<GridModel, bool?>>()).ToArray();
+
             Assert.Equal(3, actual.Length);
             Assert.Equal("", actual[0].Value);
             Assert.Equal("true", actual[1].Value);
@@ -236,6 +245,7 @@ namespace Forged.Grid.Tests
         public void OptionsFor_ForEnumerableBoolean()
         {
             SelectListItem[] actual = filters.OptionsFor(Substitute.For<IGridColumn<GridModel, bool?[]>>()).ToArray();
+
             Assert.Equal(3, actual.Length);
             Assert.Equal("", actual[0].Value);
             Assert.Equal("true", actual[1].Value);
@@ -249,7 +259,9 @@ namespace Forged.Grid.Tests
         public void OptionsFor_NullViewContext_ForEnum()
         {
             IGridColumn<GridModel, TestEnum> enumColumn = new GridColumn<GridModel, TestEnum>(column.Grid, _ => TestEnum.First);
+
             SelectListItem[] actual = filters.OptionsFor(enumColumn).ToArray();
+
             Assert.Single(actual);
             Assert.Null(actual[0].Text);
             Assert.Null(actual[0].Value);
@@ -263,8 +275,11 @@ namespace Forged.Grid.Tests
             column.Grid.ViewContext.HttpContext.RequestServices.GetService(typeof(IHtmlHelper)).Returns(helper);
             IGridColumn<GridModel, TestEnum> enumColumn = new GridColumn<GridModel, TestEnum>(column.Grid, _ => TestEnum.First);
             helper.GetEnumSelectList(typeof(TestEnum)).Returns(new[] { new SelectListItem { Value = "0", Text = "1st" }, new SelectListItem { Value = "1", Text = "2nd" } });
+
             SelectListItem[] actual = filters.OptionsFor(enumColumn).ToArray();
+
             Assert.Equal(3, actual.Length);
+
             Assert.Null(actual[0].Text);
             Assert.Null(actual[0].Value);
             Assert.Equal("0", actual[1].Value);
@@ -281,8 +296,11 @@ namespace Forged.Grid.Tests
             column.Grid.ViewContext.HttpContext.RequestServices.GetService(typeof(IHtmlHelper)).Returns(helper);
             IGridColumn<GridModel, TestEnum?> enumColumn = new GridColumn<GridModel, TestEnum?>(column.Grid, _ => TestEnum.First);
             helper.GetEnumSelectList(typeof(TestEnum)).Returns(new[] { new SelectListItem { Value = "0", Text = "1st" }, new SelectListItem { Value = "1", Text = "2nd" } });
+
             SelectListItem[] actual = filters.OptionsFor(enumColumn).ToArray();
+
             Assert.Equal(3, actual.Length);
+
             Assert.Null(actual[0].Text);
             Assert.Null(actual[0].Value);
             Assert.Equal("0", actual[1].Value);
@@ -299,8 +317,11 @@ namespace Forged.Grid.Tests
             column.Grid.ViewContext.HttpContext.RequestServices.GetService(typeof(IHtmlHelper)).Returns(helper);
             IGridColumn<GridModel, IEnumerable<TestEnum?>> enumColumn = new GridColumn<GridModel, IEnumerable<TestEnum?>>(column.Grid, _ => new TestEnum?[] { TestEnum.First });
             helper.GetEnumSelectList(typeof(TestEnum)).Returns(new[] { new SelectListItem { Value = "0", Text = "1st" }, new SelectListItem { Value = "1", Text = "2nd" } });
+
             SelectListItem[] actual = filters.OptionsFor(enumColumn).ToArray();
+
             Assert.Equal(3, actual.Length);
+
             Assert.Null(actual[0].Text);
             Assert.Null(actual[0].Value);
             Assert.Equal("0", actual[1].Value);
@@ -320,6 +341,7 @@ namespace Forged.Grid.Tests
         {
             filters.Register(typeof(int), "TEST", typeof(object));
             filters.Register(typeof(int), "TEST-FILTER", typeof(StringFilter));
+
             Assert.IsType<StringFilter>(filters.Create(typeof(int), "test-filter", ""));
         }
 
@@ -328,6 +350,7 @@ namespace Forged.Grid.Tests
         {
             filters.Register(typeof(int), "TEST", typeof(object));
             filters.Register(typeof(int?), "TEST-FILTER", typeof(StringFilter));
+
             Assert.IsType<StringFilter>(filters.Create(typeof(int), "test-filter", ""));
         }
 
@@ -336,6 +359,7 @@ namespace Forged.Grid.Tests
         {
             filters.Register(typeof(int), "test-filter", typeof(object));
             filters.Register(typeof(int?), "TEST-filter", typeof(NumberFilter<int>));
+
             Assert.IsType<NumberFilter<int>>(filters.Create(typeof(int), "test-filter", ""));
         }
 
@@ -344,6 +368,7 @@ namespace Forged.Grid.Tests
         {
             filters.Register(typeof(int), "test-filter", typeof(object));
             filters.Register(typeof(int), "TEST-filter", typeof(NumberFilter<int>));
+
             Assert.IsType<NumberFilter<int>>(filters.Create(typeof(int), "test-filter", ""));
         }
 
@@ -351,6 +376,7 @@ namespace Forged.Grid.Tests
         public void Register_NullableTypeAsNotNullable()
         {
             filters.Register(typeof(int?), "TEST", typeof(NumberFilter<int>));
+
             Assert.IsType<NumberFilter<int>>(filters.Create(typeof(int), "test", ""));
         }
 
@@ -358,6 +384,7 @@ namespace Forged.Grid.Tests
         public void Register_FilterForNewType()
         {
             filters.Register(typeof(object), "test", typeof(NumberFilter<int>));
+
             Assert.IsType<NumberFilter<int>>(filters.Create(typeof(object), "test", ""));
         }
 
@@ -365,7 +392,9 @@ namespace Forged.Grid.Tests
         public void Unregister_ExistingFilter()
         {
             filters.Register(typeof(object), "test", typeof(StringFilter));
+
             filters.Unregister(typeof(object), "TEST");
+
             Assert.Null(filters.Create(typeof(object), "test", ""));
         }
 
@@ -373,6 +402,7 @@ namespace Forged.Grid.Tests
         public void Unregister_NotExistingFilter()
         {
             filters.Unregister(GetType(), "test");
+
             Assert.Null(filters.Create(GetType(), "test", ""));
         }
 
@@ -380,7 +410,9 @@ namespace Forged.Grid.Tests
         public void Unregister_NotExistingMethod()
         {
             filters.Register(typeof(object), "test", typeof(StringFilter));
+
             filters.Unregister(typeof(object), "method");
+
             Assert.Null(filters.Create(typeof(object), "method", Array.Empty<string>()));
         }
     }

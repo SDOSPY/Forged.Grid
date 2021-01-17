@@ -28,6 +28,7 @@ namespace Forged.Grid
                                     DefinitionsValue.Add(column, (DefinitionsValue.Count, GridSortOrder.Desc));
                                 else
                                     DefinitionsValue.Add(column, (DefinitionsValue.Count, GridSortOrder.Asc));
+
                                 break;
                             }
                     DefinitionsIsSet = true;

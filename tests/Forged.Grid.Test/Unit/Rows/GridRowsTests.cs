@@ -14,6 +14,7 @@ namespace Forged.Grid.Tests
         {
             IGrid<GridModel> expected = new Grid<GridModel>(Array.Empty<GridModel>());
             IGrid<GridModel> actual = new GridRows<GridModel>(expected).Grid;
+
             Assert.Same(expected, actual);
         }
 
@@ -29,12 +30,15 @@ namespace Forged.Grid.Tests
             preProcessor.ProcessorType = GridProcessorType.Pre;
             Grid<GridModel> grid = new Grid<GridModel>(items);
             grid.Mode = GridProcessingMode.Manual;
+
             postProcessor.Process(preProcessedItems).Returns(postProcessedItems);
             preProcessor.Process(items).Returns(preProcessedItems);
             grid.Processors.Add(postProcessor);
             grid.Processors.Add(preProcessor);
+
             IEnumerable<object> actual = new GridRows<GridModel>(grid).ToList().Select(row => row.Model);
             IEnumerable<object> expected = items;
+
             Assert.Equal(expected, actual);
         }
 
@@ -50,12 +54,15 @@ namespace Forged.Grid.Tests
             preProcessor.ProcessorType = GridProcessorType.Pre;
             Grid<GridModel> grid = new Grid<GridModel>(items);
             grid.Mode = GridProcessingMode.Automatic;
+
             postProcessor.Process(preProcessedItems).Returns(postProcessedItems);
             preProcessor.Process(items).Returns(preProcessedItems);
             grid.Processors.Add(postProcessor);
             grid.Processors.Add(preProcessor);
+
             IEnumerable<object> actual = new GridRows<GridModel>(grid).ToList().Select(row => row.Model);
             IEnumerable<object> expected = postProcessedItems;
+
             Assert.Equal(expected, actual);
         }
 
@@ -65,7 +72,9 @@ namespace Forged.Grid.Tests
             IQueryable<GridModel> items = new[] { new GridModel(), new GridModel() }.AsQueryable();
             Grid<GridModel> grid = new Grid<GridModel>(items);
             int index = 0;
+
             GridRows<GridModel> rows = new GridRows<GridModel>(grid);
+
             Assert.All(rows, row => Assert.Equal(index++, row.Index));
         }
 
@@ -75,7 +84,9 @@ namespace Forged.Grid.Tests
             (string key, object value) = new KeyValuePair<string, object>("data-id", "1");
             IQueryable<GridModel> items = new[] { new GridModel(), new GridModel() }.AsQueryable();
             Grid<GridModel> grid = new Grid<GridModel>(items);
+
             GridRows<GridModel> rows = new GridRows<GridModel>(grid) { Attributes = (_) => new { data_id = "1" } };
+
             Assert.True(rows.All(row =>
                 row.Attributes.Single().Key == key &&
                 row.Attributes.Single().Value == value));
@@ -89,11 +100,15 @@ namespace Forged.Grid.Tests
             preProcessor.Process(items).Returns(Array.Empty<GridModel>().AsQueryable());
             preProcessor.ProcessorType = GridProcessorType.Pre;
             Grid<GridModel> grid = new Grid<GridModel>(items);
+
             GridRows<GridModel> rows = new GridRows<GridModel>(grid);
             IGridRow<GridModel>[] originalRows = rows.ToArray();
+
             grid.Processors.Add(preProcessor);
+
             IEnumerable<object> actual = rows.ToList().Select(row => row.Model);
             IEnumerable<object> expected = originalRows.Select(row => row.Model);
+
             preProcessor.DidNotReceive().Process(Arg.Any<IQueryable<GridModel>>());
             Assert.Equal(expected, actual);
         }
@@ -103,9 +118,12 @@ namespace Forged.Grid.Tests
         {
             GridModel[] items = { new GridModel(), new GridModel() };
             Grid<GridModel> grid = new Grid<GridModel>(items);
+
             GridRows<GridModel> rows = new GridRows<GridModel>(grid);
+
             IEnumerator actual = ((IEnumerable)rows).GetEnumerator();
             IEnumerator expected = rows.GetEnumerator();
+
             while (expected.MoveNext() | actual.MoveNext())
                 Assert.Same(((IGridRow<GridModel>?)expected.Current)?.Model, ((IGridRow<GridModel>?)actual.Current)?.Model);
         }

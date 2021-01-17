@@ -8,7 +8,8 @@ namespace Forged.Grid
         private bool Ordered { get; set; }
 
         private GridQuery()
-        { }
+        {
+        }
 
         public static bool IsOrdered(IQueryable models)
         {

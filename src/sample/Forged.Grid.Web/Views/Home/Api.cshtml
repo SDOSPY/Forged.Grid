@@ -1,0 +1,92 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid javascript API";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age);
+                columns.Add(model => model.Birthday).Formatted("{0:d}");
+                columns.Add(model => model.IsWorking);
+            })
+            .Pageable(pager =>
+            {
+                pager.RowsPerPage = 4;
+            })
+            .Empty("No data found")
+            .Filterable()
+            .Sortable()
+        )
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Javascript configuration</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">new</span> <span class="cls">MvcGrid</span>(document.querySelector(<span class="str">".mvc-grid"</span>), {
+    url: <span class="str">"IndexGrid"</span>, <span class="com">// Grid source url string.</span>
+    query: <span class="str">"search=test"</span>, <span class="com">// Grid query string.</span>
+    filters: {
+        <span class="com">// Grid filter constructors to extend or use.</span>
+        <span class="str">"default"</span>: <span class="cls">CustomDefaultFilter</span>
+        <span class="str">"person"</span>: <span class="cls">PeopleFilter</span>
+    },
+    loadingDelay: <span class="num">300</span> <span class="com">// Loading block visiblity delay on ajax grid, null - no loading screen.</span>
+});
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Javascript methods</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+<span class="com">// Any element inside the grid structure, .mvc-grid, table, tr, td, etc.</span>
+<span class="kwd">const</span> element = document.querySelector(<span class="str">".mvc-grid"</span>);
+
+<span class="com">// Initializes new or returns an existing grid's instance with applied options.</span>
+<span class="kwd">const</span> grid = <span class="kwd">new</span> <span class="cls">MvcGrid</span>(element[, { <span class="com">/* options */</span> }]);
+
+<span class="com">// Reloads the grid.</span>
+grid.reload();
+
+<span class="com">// Updates current grid options.</span>
+grid.set({ <span class="com">/* options */</span> });
+
+<span class="com">// Get current grid configuration.</span>
+grid.getConfiguration();
+
+<span class="com">// Show grid configuration popup with an optional anchor element.</span>
+grid.showConfiguration([anchor = <span class="kwd">null</span>]);
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+</div>

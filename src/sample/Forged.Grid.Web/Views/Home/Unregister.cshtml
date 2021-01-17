@@ -1,0 +1,122 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid filter unregistration";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.IsWorking);
+            })
+            .Empty("No data found")
+            .Filterable()
+        )
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Startup</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public void</span> ConfigureServices(<span class="cls">IServiceCollection</span> services)
+{
+    services.AddMvcGrid(filters =>
+    {
+        filters.Unregister(<span class="kwd">typeof</span>(<span class="cls">String</span>), <span class="str">"starts-with"</span>);
+        filters.Unregister(<span class="kwd">typeof</span>(<span class="cls">String</span>), <span class="str">"ends-with"</span>);
+    });
+}
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>View</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+@@model <span class="cls">IQueryable</span>&lt;<span class="cls">Person</span>&gt;
+
+@@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Name).Titled(<span class="str">"Name"</span>);
+        columns.Add(model => model.Surname).Titled(<span class="str">"Surname"</span>);
+        columns.Add(model => model.MaritalStatus).Titled(<span class="str">"Marital status"</span>);
+
+        columns.Add(model => model.IsWorking).Titled(<span class="str">"Employed"</span>);
+    })
+    .Empty(<span class="str">"No data found"</span>)
+    .Filterable()
+)
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Javascript</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">class</span> <span class="cls">MvcGridGuidFilter</span> <span class="kwd">extends</span> <span class="cls">MvcGridFilter</span> {
+    <span class="kwd">constructor</span>(column) {
+        <span class="kwd">super</span>(column);
+
+        <span class="kwd">this</span>.methods = [<span class="str">"contains"</span>, <span class="str">"equals"</span>, <span class="str">"not-equals"</span>];
+    }
+}
+
+<span class="kwd">new</span> <span class="cls">MvcGrid</span>(document.querySelector(<span class="str">".mvc-grid"</span>), {
+    filters: {
+        <span class="str">"text"</span>: CustomTextFilter
+    }
+});
+</code>
+</pre>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        class CustomTextFilter extends MvcGridTextFilter {
+            constructor(column) {
+                super(column);
+
+                this.methods = ["contains", "equals", "not-equals"];
+            }
+        }
+
+        new MvcGrid(document.querySelector(".mvc-grid"), {
+            filters: {
+                "text": CustomTextFilter
+            }
+        });
+    </script>
+}

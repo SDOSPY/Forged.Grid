@@ -10,10 +10,10 @@ namespace Forged.Grid.Tests
 {
     public class GridEnumerableFilterTests
     {
-        private readonly Expression<Func<GridModel, IEnumerable<string?>?>> nEnumerableExpression;
-        private readonly Expression<Func<GridModel, List<string?>?>> nListExpression;
-        private readonly Expression<Func<GridModel, string?[]?>> nArrayExpression;
-        private readonly IQueryable<GridModel> items;
+        private Expression<Func<GridModel, IEnumerable<string?>?>> nEnumerableExpression;
+        private Expression<Func<GridModel, List<string?>?>> nListExpression;
+        private Expression<Func<GridModel, string?[]?>> nArrayExpression;
+        private IQueryable<GridModel> items;
 
         public GridEnumerableFilterTests()
         {
@@ -24,11 +24,13 @@ namespace Forged.Grid.Tests
                 new GridModel { NullableArrayField = new[] { null, "test", "2", "3", "4", "5" } },
                 new GridModel { NullableArrayField = new[] { null, "TEST", "2", "3", "4", "5" } }
             }.AsQueryable();
+
             foreach (GridModel model in items)
             {
                 model.NullableEnumerableField = model.NullableArrayField;
                 model.NullableListField = model.NullableArrayField.ToList();
             }
+
             nEnumerableExpression = (model) => model.NullableEnumerableField;
             nArrayExpression = (model) => model.NullableArrayField;
             nListExpression = (model) => model.NullableListField;
@@ -39,6 +41,7 @@ namespace Forged.Grid.Tests
         {
             string? actual = new EnumerableFilter<StringFilter> { Method = "test" }.Method;
             string? expected = "test";
+
             Assert.Equal(expected, actual);
         }
 
@@ -47,6 +50,7 @@ namespace Forged.Grid.Tests
         {
             StringValues actual = new EnumerableFilter<StringFilter> { Values = "test" }.Values;
             StringValues expected = "test";
+
             Assert.Equal(expected, actual);
         }
 
@@ -55,6 +59,7 @@ namespace Forged.Grid.Tests
         {
             GridFilterCase actual = new EnumerableFilter<StringFilter> { Case = GridFilterCase.Upper }.Case;
             GridFilterCase expected = GridFilterCase.Upper;
+
             Assert.Equal(expected, actual);
         }
 
@@ -62,6 +67,7 @@ namespace Forged.Grid.Tests
         public void Apply_NotEnumerable_ReturnsNull()
         {
             Expression<Func<GridModel, object>> expression = (_) => "test";
+
             Assert.Null(new EnumerableFilter<StringFilter>().Apply(expression));
         }
 
@@ -74,8 +80,10 @@ namespace Forged.Grid.Tests
                 Case = GridFilterCase.Original,
                 Method = "equals"
             };
+
             IEnumerable expected = items.Where(model => model.NullableListField.Any(item => item == "test" || item == "33"));
             IEnumerable actual = items.Where(nListExpression, filter);
+
             Assert.Equal(expected, actual);
         }
 
@@ -88,8 +96,10 @@ namespace Forged.Grid.Tests
                 Case = GridFilterCase.Original,
                 Method = "equals"
             };
+
             IEnumerable expected = items.Where(model => model.NullableArrayField.Any(item => item == "test" || item == "33"));
             IEnumerable actual = items.Where(nArrayExpression, filter);
+
             Assert.Equal(expected, actual);
         }
 
@@ -102,8 +112,10 @@ namespace Forged.Grid.Tests
                 Case = GridFilterCase.Original,
                 Method = "equals"
             };
+
             IEnumerable expected = items.Where(model => model.NullableEnumerableField.Any(item => item == "test" || item == "33"));
             IEnumerable actual = items.Where(nEnumerableExpression, filter);
+
             Assert.Equal(expected, actual);
         }
 
@@ -116,8 +128,10 @@ namespace Forged.Grid.Tests
                 Case = GridFilterCase.Original,
                 Method = "equals"
             };
+
             IEnumerable expected = items.Where(model => model.NullableArrayField.Any(item => item == "test" || item == "33"));
             IEnumerable actual = items.Where(nListExpression, filter);
+
             Assert.Equal(expected, actual);
         }
 
@@ -130,8 +144,10 @@ namespace Forged.Grid.Tests
                 Case = GridFilterCase.Upper,
                 Method = "equals"
             };
+
             IEnumerable expected = items.Where(model => model.NullableArrayField.Any(item => item != null && item.ToUpper() == "TEST" || item == "33"));
             IEnumerable actual = items.Where(nListExpression, filter);
+
             Assert.Equal(expected, actual);
         }
 
@@ -144,8 +160,10 @@ namespace Forged.Grid.Tests
                 Case = GridFilterCase.Lower,
                 Method = "equals"
             };
+
             IEnumerable expected = items.Where(model => model.NullableArrayField != null && model.NullableArrayField.Any(item => item != null && item.ToLower() == "test" || item == "33"));
             IEnumerable actual = items.Where(nListExpression, filter);
+
             Assert.Equal(expected, actual);
         }
     }

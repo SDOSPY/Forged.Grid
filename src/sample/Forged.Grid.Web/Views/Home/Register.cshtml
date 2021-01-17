@@ -1,0 +1,131 @@
+﻿@model IQueryable<Person>
+
+@{
+    ViewBag.Title = "Grid filter registration";
+}
+
+<div class="widget example">
+    <div class="widget-header">
+        <div class="fa fa-bars"></div>
+        <span>Preview</span>
+    </div>
+    <div class="widget-content">
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.Add(model => model.Name);
+                columns.Add(model => model.Surname);
+                columns.Add(model => model.MaritalStatus);
+
+                columns.Add(model => model.Age);
+                columns.Add(model => model.IsWorking);
+            })
+            .Empty("No data found")
+            .Filterable()
+        )
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Startup</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public void</span> ConfigureServices(<span class="cls">IServiceCollection</span> services)
+{
+    services.AddMvcGrid(filters =>
+        filters.Register(<span class="kwd">typeof</span>(<span class="cls">Int32</span>), <span class="str">"contains"</span>, <span class="kwd">typeof</span>(<span class="cls">NumberContainsFilter</span>)));
+}
+</code>
+</pre>
+            </div>
+        </div>
+        <div class="widget code">
+            <div class="widget-header">
+                <div class="fa fa-code"></div>
+                <span>Filter</span>
+            </div>
+            <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">public class</span> <span class="cls">NumberContainsFilter</span> : <span class="cls">AGridFilter</span>
+{
+    <span class="kwd">public override</span> <span class="cls">Expression</span>? Apply(<span class="cls">Expression</span> expression)
+    {
+        <span class="kwd">if</span> (Values.Length == 0 || Values.Any(<span class="cls">String</span>.IsNullOrEmpty))
+            <span class="kwd">return null</span>;
+
+        <span class="kwd">return base</span>.Apply(expression);
+    }
+
+    <span class="kwd">protected override</span> <span class="cls">Expression</span>? Apply(<span class="cls">Expression</span> expression, <span class="cls">String</span>? value)
+    {
+        <span class="cls">Expression</span> valueExpression = <span class="cls">Expression</span>.Constant(value?.ToUpper());
+        <span class="cls">MethodInfo</span> toStringMethod = <span class="kwd">typeof</span>(<span class="cls">Int32</span>).GetMethod(<span class="kwd">nameof</span>(<span class="cls">Int32</span>.ToString), <span class="kwd">new</span> <span class="cls">Type</span>[0])!;
+        <span class="cls">MethodInfo</span> containsMethod = <span class="kwd">typeof</span>(<span class="cls">String</span>).GetMethod(<span class="kwd">nameof</span>(<span class="cls">String</span>.Contains), <span class="kwd">new</span>[] { <span class="kwd">typeof</span>(<span class="cls">String</span>) })!;
+
+        <span class="cls">Expression</span> toString = <span class="cls">Expression</span>.Call(expression, toStringMethod);
+
+        <span class="com">// (x) => x.ToString().Contains(value)</span>
+        <span class="kwd">return</span> <span class="cls">Expression</span>.Call(toString, containsMethod, valueExpression);
+    }
+}
+</code>
+</pre>
+            </div>
+        </div>
+    </div>
+    <div class="widget code col">
+        <div class="widget-header">
+            <div class="fa fa-code"></div>
+            <span>Javascript</span>
+        </div>
+        <div class="widget-content">
+<pre>
+<code>
+<span class="kwd">class</span> <span class="cls">ExtendedNumberFilter</span> <span class="kwd">extends</span> <span class="cls">MvcGridNumberFilter</span> {
+    <span class="kwd">constructor</span> (column) {
+        <span class="kwd">super</span>(column);
+
+        <span class="kwd">this</span>.methods.unshift(<span class="str">"contains"</span>);
+    }
+}
+
+<span class="kwd">new</span> <span class="cls">MvcGrid</span>(document.querySelector(<span class="str">".mvc-grid"</span>), {
+    filters: {
+        <span class="str">"number"</span>: ExtendedNumberFilter
+    }
+});
+
+MvcGrid.lang.number.contains = <span class="str">"Contains"</span>;
+</code>
+</pre>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        class ExtendedNumberFilter extends MvcGridNumberFilter {
+            constructor (column) {
+                super(column);
+
+                this.methods.unshift("contains");
+            }
+        }
+
+        new MvcGrid(document.querySelector(".mvc-grid"), {
+            filters: {
+                "number": ExtendedNumberFilter
+            }
+        });
+
+        MvcGrid.lang.number.contains = "Contains";
+    </script>
+}

@@ -11,13 +11,14 @@ namespace Forged.Grid.Tests
 {
     public class HtmlGridExtensionsTests
     {
-        private readonly HtmlGrid<GridModel> htmlGrid;
+        private HtmlGrid<GridModel> htmlGrid;
 
         public HtmlGridExtensionsTests()
         {
             IHtmlHelper html = Substitute.For<IHtmlHelper>();
             IGrid<GridModel> grid = new Grid<GridModel>(new GridModel[8]);
             html.ViewContext.Returns(new ViewContext { HttpContext = new DefaultHttpContext() });
+
             htmlGrid = new HtmlGrid<GridModel>(html, grid);
             grid.Columns.Add(model => model.Name);
             grid.Columns.Add(model => model.Sum);
@@ -27,7 +28,9 @@ namespace Forged.Grid.Tests
         public void Build_Columns()
         {
             Action<IGridColumnsOf<GridModel>> columns = Substitute.For<Action<IGridColumnsOf<GridModel>>>();
+
             htmlGrid.Build(columns);
+
             columns.Received()(htmlGrid.Grid.Columns);
         }
 
@@ -35,9 +38,12 @@ namespace Forged.Grid.Tests
         public void Build_AddsSortProcessor()
         {
             htmlGrid.Grid.Processors.Clear();
+
             htmlGrid.Build(_ => { });
+
             object expected = htmlGrid.Grid.Sort;
             object actual = htmlGrid.Grid.Processors.Single();
+
             Assert.Equal(expected, actual);
         }
 
@@ -46,6 +52,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Build(_ => { });
+
             Assert.Same(expected, actual);
         }
 
@@ -57,7 +64,9 @@ namespace Forged.Grid.Tests
         {
             foreach (IGridColumn column in htmlGrid.Grid.Columns)
                 column.Filter.Type = current;
+
             htmlGrid.Filterable(GridFilterType.Double);
+
             foreach (IGridColumn actual in htmlGrid.Grid.Columns)
                 Assert.Equal(type, actual.Filter.Type);
         }
@@ -70,7 +79,9 @@ namespace Forged.Grid.Tests
         {
             foreach (IGridColumn column in htmlGrid.Grid.Columns)
                 column.Filter.IsEnabled = current;
+
             htmlGrid.Filterable();
+
             foreach (IGridColumn actual in htmlGrid.Grid.Columns)
                 Assert.Equal(isEnabled, actual.Filter.IsEnabled);
         }
@@ -80,6 +91,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Filterable();
+
             Assert.Same(expected, actual);
         }
 
@@ -91,7 +103,9 @@ namespace Forged.Grid.Tests
         {
             foreach (IGridColumn column in htmlGrid.Grid.Columns)
                 column.Filter.IsEnabled = current;
+
             htmlGrid.Filterable(GridFilterCase.Original);
+
             foreach (IGridColumn actual in htmlGrid.Grid.Columns)
                 Assert.Equal(isEnabled, actual.Filter.IsEnabled);
         }
@@ -105,7 +119,9 @@ namespace Forged.Grid.Tests
         {
             foreach (IGridColumn column in htmlGrid.Grid.Columns)
                 column.Filter.Case = current;
+
             htmlGrid.Filterable(GridFilterCase.Lower);
+
             foreach (IGridColumn actual in htmlGrid.Grid.Columns)
                 Assert.Equal(filterCace, actual.Filter.Case);
         }
@@ -115,6 +131,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Filterable(GridFilterCase.Upper);
+
             Assert.Same(expected, actual);
         }
 
@@ -126,7 +143,9 @@ namespace Forged.Grid.Tests
         {
             foreach (IGridColumn column in htmlGrid.Grid.Columns)
                 column.Sort.IsEnabled = current;
+
             htmlGrid.Sortable();
+
             foreach (IGridColumn actual in htmlGrid.Grid.Columns)
                 Assert.Equal(isEnabled, actual.Sort.IsEnabled);
         }
@@ -136,6 +155,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Sortable();
+
             Assert.Same(expected, actual);
         }
 
@@ -144,6 +164,7 @@ namespace Forged.Grid.Tests
         {
             Func<GridModel, object>? expected = (_) => new { data_id = 1 };
             Func<GridModel, object>? actual = htmlGrid.RowAttributed(expected).Grid.Rows.Attributes;
+
             Assert.Same(expected, actual);
         }
 
@@ -152,6 +173,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.RowAttributed(_ => new { });
+
             Assert.Same(expected, actual);
         }
 
@@ -160,8 +182,10 @@ namespace Forged.Grid.Tests
         {
             htmlGrid.Grid.Attributes["width"] = 10;
             htmlGrid.Grid.Attributes["class"] = "test";
+
             IDictionary<string, object?> actual = htmlGrid.Attributed(new { width = 1 }).Grid.Attributes;
             IDictionary<string, object?> expected = new Dictionary<string, object?> { ["width"] = 1, ["class"] = "test" };
+
             Assert.Equal(expected, actual);
         }
 
@@ -170,6 +194,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Attributed(new { width = 1 });
+
             Assert.Same(expected, actual);
         }
 
@@ -201,8 +226,10 @@ namespace Forged.Grid.Tests
         public void AppendsCss_Classes(string current, string toAppend, string cssClasses)
         {
             htmlGrid.Grid.Attributes["class"] = current;
+
             string? expected = cssClasses;
             string? actual = htmlGrid.AppendCss(toAppend).Grid.Attributes["class"]?.ToString();
+
             Assert.Equal(expected, actual);
         }
 
@@ -211,6 +238,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.AppendCss("column-class");
+
             Assert.Same(expected, actual);
         }
 
@@ -219,6 +247,7 @@ namespace Forged.Grid.Tests
         {
             string? expected = "table";
             string? actual = htmlGrid.Css(" table ").Grid.Attributes["class"]?.ToString();
+
             Assert.Equal(expected, actual);
         }
 
@@ -227,6 +256,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Css("");
+
             Assert.Same(expected, actual);
         }
 
@@ -235,6 +265,7 @@ namespace Forged.Grid.Tests
         {
             string? expected = "<Text>";
             string? actual = htmlGrid.Empty(new HtmlString("<Text>")).Grid.EmptyText;
+
             Assert.Equal(expected, actual);
         }
 
@@ -243,6 +274,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Empty(new HtmlString("Text"));
+
             Assert.Same(expected, actual);
         }
 
@@ -251,6 +283,7 @@ namespace Forged.Grid.Tests
         {
             string? expected = "&lt;Text&gt;";
             string? actual = htmlGrid.Empty("<Text>").Grid.EmptyText;
+
             Assert.Equal(expected, actual);
         }
 
@@ -259,6 +292,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Empty("Text");
+
             Assert.Same(expected, actual);
         }
 
@@ -267,6 +301,7 @@ namespace Forged.Grid.Tests
         {
             string expected = "Test";
             string actual = htmlGrid.Named("Test").Grid.Name;
+
             Assert.Equal(expected, actual);
         }
 
@@ -275,6 +310,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Named("Name");
+
             Assert.Same(expected, actual);
         }
 
@@ -283,6 +319,7 @@ namespace Forged.Grid.Tests
         {
             string? expected = "Test";
             string? actual = htmlGrid.Id("Test").Grid.Id;
+
             Assert.Equal(expected, actual);
         }
 
@@ -291,6 +328,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Id("Test");
+
             Assert.Same(expected, actual);
         }
 
@@ -299,6 +337,7 @@ namespace Forged.Grid.Tests
         {
             string actual = htmlGrid.UsingFooter("Partial").Grid.FooterPartialViewName;
             string expected = "Partial";
+
             Assert.Equal(expected, actual);
         }
 
@@ -307,6 +346,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.UsingFooter("Partial");
+
             Assert.Same(expected, actual);
         }
 
@@ -315,9 +355,12 @@ namespace Forged.Grid.Tests
         {
             IGridProcessor<GridModel> processor = Substitute.For<IGridProcessor<GridModel>>();
             htmlGrid.Grid.Processors.Clear();
+
             htmlGrid.Using(processor);
+
             object actual = htmlGrid.Grid.Processors.Single();
             object expected = processor;
+
             Assert.Same(expected, actual);
         }
 
@@ -326,6 +369,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Using(Substitute.For<IGridProcessor<GridModel>>());
+
             Assert.Same(expected, actual);
         }
 
@@ -334,6 +378,7 @@ namespace Forged.Grid.Tests
         {
             GridProcessingMode actual = htmlGrid.Using(GridProcessingMode.Manual).Grid.Mode;
             GridProcessingMode expected = GridProcessingMode.Manual;
+
             Assert.Equal(expected, actual);
         }
 
@@ -342,6 +387,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Using(GridProcessingMode.Manual);
+
             Assert.Same(expected, actual);
         }
 
@@ -350,6 +396,7 @@ namespace Forged.Grid.Tests
         {
             GridFilterMode actual = htmlGrid.Using(GridFilterMode.Row).Grid.FilterMode;
             GridFilterMode expected = GridFilterMode.Row;
+
             Assert.Equal(expected, actual);
         }
 
@@ -358,6 +405,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Using(GridFilterMode.Header);
+
             Assert.Same(expected, actual);
         }
 
@@ -366,6 +414,7 @@ namespace Forged.Grid.Tests
         {
             string actual = htmlGrid.UsingUrl("/test/index").Grid.Url;
             string expected = "/test/index";
+
             Assert.Same(expected, actual);
         }
 
@@ -374,6 +423,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.UsingUrl("");
+
             Assert.Same(expected, actual);
         }
 
@@ -382,9 +432,12 @@ namespace Forged.Grid.Tests
         {
             IGridPager<GridModel> pager = new GridPager<GridModel>(htmlGrid.Grid);
             htmlGrid.Grid.Pager = pager;
+
             htmlGrid.Pageable();
+
             IGridPager actual = htmlGrid.Grid.Pager;
             IGridPager expected = pager;
+
             Assert.Same(expected, actual);
         }
 
@@ -392,9 +445,12 @@ namespace Forged.Grid.Tests
         public void Pageable_CreatesGridPager()
         {
             htmlGrid.Grid.Pager = null;
+
             htmlGrid.Pageable();
+
             IGridPager<GridModel> expected = new GridPager<GridModel>(htmlGrid.Grid);
             IGridPager<GridModel> actual = htmlGrid.Grid.Pager!;
+
             Assert.Equal(expected.FirstDisplayPage, actual.FirstDisplayPage);
             Assert.Equal(expected.PartialViewName, actual.PartialViewName);
             Assert.Equal(expected.PagesToDisplay, actual.PagesToDisplay);
@@ -412,11 +468,13 @@ namespace Forged.Grid.Tests
             htmlGrid.Grid.Pager = new GridPager<GridModel>(htmlGrid.Grid);
             IGridPager expected = htmlGrid.Grid.Pager;
             bool builderCalled = false;
+
             htmlGrid.Pageable(actual =>
             {
                 Assert.Same(expected, actual);
                 builderCalled = true;
             });
+
             Assert.True(builderCalled);
         }
 
@@ -424,9 +482,12 @@ namespace Forged.Grid.Tests
         public void Pageable_AddsGridProcessor()
         {
             htmlGrid.Grid.Processors.Clear();
+
             htmlGrid.Pageable();
+
             object? actual = htmlGrid.Grid.Processors.Single();
             object? expected = htmlGrid.Grid.Pager;
+
             Assert.Same(expected, actual);
         }
 
@@ -435,6 +496,7 @@ namespace Forged.Grid.Tests
         {
             object expected = htmlGrid;
             object actual = htmlGrid.Pageable();
+
             Assert.Same(expected, actual);
         }
 
@@ -446,6 +508,7 @@ namespace Forged.Grid.Tests
             IGridColumn<GridModel> sum = htmlGrid.Grid.Columns.Add(model => model.Sum);
             IGridColumn<GridModel> date = htmlGrid.Grid.Columns.Add(model => model.Date);
             IGridColumn<GridModel> name = htmlGrid.Grid.Columns.Add(model => model.Name);
+
             htmlGrid.Configure(new GridConfig
             {
                 Name = "Test",
@@ -456,8 +519,10 @@ namespace Forged.Grid.Tests
                     new GridColumnConfig { Name = name.Name }
                 }
             });
+
             IList<IGridColumn<GridModel>> expected = new[] { date, sum, name, empty };
             IList<IGridColumn<GridModel>> actual = htmlGrid.Grid.Columns;
+
             Assert.Equal(expected, actual);
         }
 
@@ -469,6 +534,7 @@ namespace Forged.Grid.Tests
             IGridColumn<GridModel> sum = htmlGrid.Grid.Columns.Add(model => model.Sum);
             IGridColumn<GridModel> name = htmlGrid.Grid.Columns.Add(model => model.Name);
             IGridColumn<GridModel> date = htmlGrid.Grid.Columns.Add(model => model.Date).Hidden();
+
             htmlGrid.Configure(new GridConfig
             {
                 Name = "Test",
@@ -479,6 +545,7 @@ namespace Forged.Grid.Tests
                     new GridColumnConfig { Name = name.Name, Hidden = false }
                 }
             });
+
             Assert.False(empty.IsHidden);
             Assert.False(name.IsHidden);
             Assert.True(date.IsHidden);

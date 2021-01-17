@@ -16,6 +16,7 @@ namespace Forged.Grid.Tests
         {
             object expected = new object();
             object actual = new GridRow<object>(expected, 0).Model;
+
             Assert.Same(expected, actual);
         }
     }

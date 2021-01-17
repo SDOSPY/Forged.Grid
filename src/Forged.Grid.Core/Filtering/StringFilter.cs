@@ -19,11 +19,11 @@ namespace Forged.Grid
         {
             Empty = Expression.Constant("");
             Null = Expression.Constant(null, typeof(string));
-            ToLower = typeof(string).GetMethod(nameof(string.ToLower), Array.Empty<Type>())!;
-            ToUpper = typeof(string).GetMethod(nameof(string.ToUpper), Array.Empty<Type>())!;
-            Contains = typeof(string).GetMethod(nameof(string.Contains), new[] { typeof(string) })!;
-            EndsWith = typeof(string).GetMethod(nameof(string.EndsWith), new[] { typeof(string) })!;
-            StartsWith = typeof(string).GetMethod(nameof(string.StartsWith), new[] { typeof(string) })!;
+            ToLower = typeof(string).GetMethod(nameof(String.ToLower), Array.Empty<Type>())!;
+            ToUpper = typeof(string).GetMethod(nameof(String.ToUpper), Array.Empty<Type>())!;
+            Contains = typeof(string).GetMethod(nameof(String.Contains), new[] { typeof(string) })!;
+            EndsWith = typeof(string).GetMethod(nameof(String.EndsWith), new[] { typeof(string) })!;
+            StartsWith = typeof(string).GetMethod(nameof(String.StartsWith), new[] { typeof(string) })!;
         }
 
         public override Expression? Apply(Expression expression)
@@ -61,7 +61,7 @@ namespace Forged.Grid
                 "not-equals" => string.IsNullOrEmpty(value)
                     ? Expression.AndAlso(Expression.NotEqual(expression, Null), Expression.NotEqual(expression, Empty))
                     : Expression.NotEqual(ConvertCase(expression), ConvertCase(value)),
-                "equals" => string.IsNullOrEmpty(value)
+                "equals" => String.IsNullOrEmpty(value)
                     ? Expression.OrElse(Expression.Equal(expression, Null), Expression.Equal(expression, Empty))
                     : Expression.Equal(ConvertCase(expression), ConvertCase(value)),
                 "starts-with" => Expression.Call(ConvertCase(expression), StartsWith, ConvertCase(value)),
